@@ -1,4 +1,7 @@
-﻿ <a href="#build"> 编译</a><br />
+﻿
+<a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
+ 
+ <a href="#build"> 编译</a><br />
 <a href="#config">  配置文件</a><br />
 <a href="#route">  路由注册</a>
 <p>GoMVC是一个简单，便捷的MVC框架。程序注释全部使用中文，很适合国人使用。文档也很详细。
@@ -94,3 +97,4 @@ func init() {
 对于Controller的命名没有严格的要求，可以用Home,也可以用HomeController
 <p>
     &nbsp;</p>
+ <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
