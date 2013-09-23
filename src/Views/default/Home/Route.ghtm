@@ -1,0 +1,44 @@
+{{template "header" .}}
+<h1>路由</h1>
+ <p>用RouteTable.AddRote来注册路由。其格式如下：
+<pre>
+//注册标准路由
+	RouteTable.AddRote(&RouteItem{
+		Name:     "default",
+		Url:      "{controller}/{action}",
+		Defaults: map[string]interface{}{"controller": "home", "action": "index"}})
+</pre>
+<p>Name:路由名称<br/>
+Url:路由的格式<br/>
+Defaults: 路由参数的默认值
+</p>
+除了默认值，还可以指定约束，来限制参数的类型，如下面的例子，指定id参数，只能是数字型。
+<pre>
+RouteTable.AddRote(&RouteItem{
+		Name:        "default",
+		Url:         "{controller}/{action}/{id}",
+		Defaults:    map[string]interface{}{"controller": "home", "action": "index", "id": 123},
+		Constraints: map[string]string{"id": `^(\d+)$`}})
+</pre>
+在上面的例子中我们指定了id参数只能是数字，并设置了默认值123。要在Controller中获取该参数值，可以用this.RouteData["id"]。
+</p>
+<p>
+因为在Go没有办法反射出包中的所有struct，所以需要手动来注册Controller,格式如下：
+<pre>
+import (
+	"System/Web"
+	"fmt"
+)
+
+type Home struct {
+	Web.Controller
+}
+
+//注册Controller
+func init() {
+	Web.App.RegisterController(Home{})
+}
+</pre>
+对于Controller的命名没有严格的要求，可以用Home,也可以用HomeController
+</p>
+{{RanderAction "home" "footer" "" .Request}}

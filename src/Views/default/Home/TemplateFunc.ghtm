@@ -1,0 +1,79 @@
+{{template "header" .}}
+Go中默认提供了and,not,len等函,但还不够用，所以在System/TemplateFunc中又自定义了一些模板函数。
+<ul>
+<li>RanderAction：在当前位置嵌入另一个页面。该函数定义如下：
+<pre>
+func RanderAction(controller, action, param string, r *http.Request) HTML {
+	...
+}
+</pre>
+param参数为URL地址栏中的参数，如"a=1&b=2",r 为http.Request。在模板中的的调用方法如下：
+<pre>
+{ { RanderAction "home" "footer" "" .Request } }
+</pre>
+在ViewData中预设了Request的值为当前请求对像。
+</li>
+<li>Equal：判断两个对像是否相等，定义如下：
+<pre>
+func Equal(a, b interface{}) bool {
+	...
+	}
+</pre>
+a,b必须是同一种类型
+</li>
+<li>Greater: 判断第一个参数值是否大于第二个参数值，定义如下：
+<pre>
+func Greater(a, b interface{}) bool {
+	...
+	}
+</pre>
+a,b必须是同一种类型,且必须是其本类型int,float,string。
+</li>
+<li>GreaterOrEqual: 判断第一个参数值是否大于等于第二个参数值，定义如下：
+<pre>
+func GreaterOrEqual(a, b interface{}) bool {
+	...
+	}
+</pre>
+a,b必须是同一种类型,且必须是其本类型int,float,string。
+</li>
+<li>Less: 判断第一个参数值是否小于第二个参数值，定义如下：
+<pre>
+func Less(a, b interface{}) bool {
+	...
+	}
+</pre>
+a,b必须是同一种类型,且必须是其本类型int,float,string。
+</li>
+<li>LessOrEqual: 判断第一个参数值是否小于等于第二个参数值，定义如下：
+<pre>
+func LessOrEqual(a, b interface{}) bool {
+	...
+	}
+</pre>
+a,b必须是同一种类型,且必须是其本类型int,float,string。
+</li>
+<li>SubString: 字符串截取，定义如下：
+<pre>
+func SubString(str string, start, length int) string {
+	...
+	}
+</pre>
+str是要截取的字符串，start是开始位置，0是第一个字符处开始，length是要截取的字符串的长度。
+</li>
+<li>Trim: 删除字符串两端指定的字符，定义如下：
+<pre>
+func Trim(str, cutset string) string {
+	return strings.Trim(str, cutset)
+}
+</pre>
+</li>
+<li>TrimSpace: 删除字符串两端的空格，定义如下：
+<pre>
+func TrimSpace(str string) string {
+	return strings.TrimSpace(str)
+}
+</pre>
+</li>
+</ul>
+{{RanderAction "home" "footer" "" .Request}}

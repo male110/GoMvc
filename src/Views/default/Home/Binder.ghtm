@@ -1,0 +1,68 @@
+{{template "header" .}}
+GoMvc支持参数的自动绑定，但参数类型必须是struct类型才可以，因为Go中没有办法来获取函数参数的名称。
+如我们定义一个User类，如下：
+<pre>
+type User struct {
+	UserName  string
+	Password string
+}
+</pre>
+然后定义一个表单，表单中各控件的名称与User的字段名相同，如下：
+<pre>
+&lt;form action="" method="post"&gt;
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;
+            用户名： 
+        &lt;/td&gt;
+        &lt;td&gt;
+            &lt;input id="UserName0" name="UserName0" type="text" /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;
+            用户名：&lt;/td&gt;
+        &lt;td&gt;
+            &lt;input id="Password0" name="Password0" type="password" /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;
+        &lt;/td&gt;
+        &lt;td align="center"&gt;
+            &lt;input id="Submit2" type="submit" value="submit" /&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+&lt;/form&gt;
+</pre>
+Action的定义如下：
+<pre>
+func (this *Home) Binder(u Model.User) *Web.ViewResult {
+	....
+	}
+</pre>
+表单中的值会自动绑定到参数u。
+<p>
+{{if .ShowLogin}}
+下面是实际的一个例子：
+<form action="/Home/Binder" method="post">
+    <table>
+        <tr>
+            <td>  用户名：  </td>
+            <td><input id="UserName" name="UserName" type="text" /></td>
+        </tr>
+        <tr>
+            <td> 用户名：</td>
+            <td><input id="Password" name="Password" type="password" /></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td align="center"><input id="Submit1" type="submit" value="submit" /> </td>
+        </tr>
+    </table>
+    </form>
+{{else}}
+Model.User的值为:
+{{.User}}
+{{end}}
+</p>
+{{RanderAction "home" "footer" "" .Request}}
