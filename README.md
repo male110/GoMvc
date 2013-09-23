@@ -1,7 +1,6 @@
-﻿    <p>
-      <a href="#build"> 编译</a><br />
-      <a href="#config">  配置文件</a><br />
-      <a href="#route">  路由注册</a></p>
+﻿ <a href="#build"> 编译</a><br />
+<a href="#config">  配置文件</a><br />
+<a href="#route">  路由注册</a>
 <p>GoMVC是一个简单，便捷的MVC框架。程序注释全部使用中文，很适合国人使用。文档也很详细。
 <a name="build">编译</a>时，需要把GoMvc目录设置为GOPATH.
 </p>
