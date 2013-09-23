@@ -29,12 +29,15 @@ func (this *Home) Config() *Web.ViewResult {
 	return this.View()
 }
 func (this *Home) Route() *Web.ViewResult {
+	this.ViewData["Title"] = "路由"
 	return this.View()
 }
 func (this *Home) TemplateFunc() *Web.ViewResult {
+	this.ViewData["Title"] = "模板函数"
 	return this.View()
 }
 func (this *Home) Binder(u Model.User) *Web.ViewResult {
+	this.ViewData["Title"] = "参数绑定"
 	if this.Request.Method == "POST" {
 		this.ViewData["ShowLogin"] = false
 		this.ViewData["User"] = fmt.Sprintf("%v", u)
