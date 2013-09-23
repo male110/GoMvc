@@ -1,11 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" >
-<head>
-    <title>Untitled Page</title>
-</head>
-<body>
-
-    <p>
+﻿    <p>
       <a href="#build"> 编译</a><br />
       <a href="#config">  配置文件</a><br />
       <a href="#route">  路由注册</a></p>
@@ -102,5 +95,3 @@ func init() {
 对于Controller的命名没有严格的要求，可以用Home,也可以用HomeController
 <p>
     &nbsp;</p>
-</body>
-</html>
