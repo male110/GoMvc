@@ -1,5 +1,6 @@
 ﻿
 <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
+<p>有任何问题，可加群：184572648，我基本上每天都在线的</p>
  
  <a href="#build"> 编译</a><br />
 <a href="#config">  配置文件</a><br />
@@ -11,6 +12,7 @@
 <b><a name="config">配置文件</a></b>
 </p>
 <div>
+  
     <p>
         网站的配置文件为web.config，格式为XML，配置项的内容如下：</p>
     <p>
@@ -98,3 +100,4 @@ func init() {
 <p>
     &nbsp;</p>
  <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
+<p>有任何问题，可加群：184572648，我基本上每天都在线的</p>
