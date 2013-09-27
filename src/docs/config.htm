@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>配置文件</title>
+     <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+
+    <div>
+        <p>
+            网站的配置文件为web.config，格式为XML，配置项的内容如下：</p>
+        <p>
+            <b>ShowErrors：</b>是否显示错误信息。true,显示；false,不显示。建义在测试时可以设置为true,发布到正式环境后设置为false。</p>
+        <p>
+            <b>CookieDomain：</b>Cookies的Domain信息，可用来共享cookie。如domain.com，和sub.domain.com，可以通过把CookieDomain统一设置为domain.com来共享cookies信息</p>
+        <p>
+            <b>Theme：</b>网站当前使用的主题，在Views目录下，可以有多套网站模板。</p>
+        <p>
+            <b><a name="Log">LogPath：</a></b>日志文件的存放位置</p>
+        <p>
+            <b>LogFileMaxSize：</b>单个日志文件的大小，超过指定大小后将创建一个新的日志文件。</p>
+        <p>
+            <b>DriverName：</b>数据库的驱动名称。</p>
+        <p>
+            <b>DataSourceName：</b>数据库的连接字符串。</p>
+        <p>
+            <b><a name='StaticDir'>StaticDir</a>：</b>静态目录,该目录下通常是CSS,JS,图片等静态资源。</p>
+        <p>
+            <b>StaticFile：</b>静态文件，用来设置单个的静态文件，主要是为了提高灵活性，满足特殊的需求.</p>
+        <p>
+            <b>SessionType：</b>Session的存放类型,1,文件,2内存,3Mysql数据库,修改需重启才能生效。当配置为3时，需要在数据库中创建一个表，来存放session,创建表的SQL如下：<br />
+        </p>
+        <pre>CREATE TABLE `session` (
+	`session_id` CHAR(32) NULL,
+	`session_data` BLOB NULL,
+	`lastupdatetime` DATETIME NULL,
+	PRIMARY KEY (`session_id`)
+)
+COLLATE=&#39;utf8_general_ci&#39;;
+</pre>
+        <p>
+            <b><a name="session">SessionLocation：</a></b>当SessionType为1时，该项为Session文件的存放路径；SessionType为3时,该项为数据库连接字符串。</p>
+        <p>
+            <b>SessionTimeOut：</b>Session超时时间，单位分钟</p>
+        <p>
+            <b>MemFreeInterval：</b>程序中有定时器，定时对Session进行检查，删除超时的Session，该配置项用来设置多久进行一次检查，单位秒，默认值60。</p>
+        <p>
+            <b>ListenPort：</b>网站的端口号,该配置改后必须重启程序才能生效。</p>
+    </div>
+
+</body>
+</html>

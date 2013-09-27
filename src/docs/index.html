@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>GoMvc文档</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+        body
+        {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        .sidebar-nav
+        {
+            padding: 9px 0;
+        }
+        @media (max-width: 980px)
+        {
+            /* Enable use of floated navbar text */    .navbar-text.pull-right
+            {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
+                    </span>
+                </button>
+                <a class="brand" href="#" style="color: white">GoMvc帮助文档</a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list" id="left-menu">
+                        <li class="active"><a href="intro.html" onclick="selectItem(this.parentNode)" target="main">简介</a></li>
+                        <li><a href="dir.htm" target="main" onclick="selectItem(this.parentNode)">目录结构</a></li>
+                        <li><a href="config.htm" target="main" onclick="selectItem(this.parentNode)">配置文件</a></li>
+                        <li><a href="route.htm" target="main" onclick="selectItem(this.parentNode)">路由</a></li>                        
+                        <li><a href="controler.htm" target="main" onclick="selectItem(this.parentNode)">Controller与Action</a></li> 
+                        <li><a href="TplFunc.htm" target="main" onclick="selectItem(this.parentNode)">模板函数</a></li>                         
+                        <li><a href="binder.htm" target="main" onclick="selectItem(this.parentNode)">参数绑定</a></li>                         
+                        <li><a href="Log.htm" target="main" onclick="selectItem(this.parentNode)">日志</a></li> 
+                        
+                        <li><a href="config.htm#session" target="main" onclick="selectItem(this.parentNode)">日志</a></li> 
+                    </ul>
+                </div>
+                <!--/.well -->
+            </div>
+            <!--/span-->
+            <div class="span9" style="padding-right:20pt">
+                <iframe src="intro.html" id='ifm' name="main" onload="javascript:ResizeIFrame('ifm');" width="100%" frameborder="0" marginheight="0" marginwidth="0" frameborder="0" scrolling="auto" ></iframe>
+                <!--/row-->
+                <!--/row-->
+            </div>
+            <!--/span-->
+        </div>
+        <!--/row-->
+        <hr>
+        <footer>
+        <p>&copy; Company 2013</p>
+      </footer>
+    </div>
+    <!--/.fluid-container-->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="js/jquery-1.10.2.min.js"></script>
+
+    <script src="js/bootstrap.js"></script>
+
+</body>
+</html>
+
+<script>
+var menuItems=$("#left-menu>li[class!='nav-header']");
+function clearActive()
+{
+ for(var i=0;i<menuItems.length;i++)
+ {
+   var item=menuItems[i];
+   $(item).removeClass("active");
+ }
+}
+function selectItem(item)
+{
+ clearActive();
+ $(item).addClass("active");
+}
+
+function ResizeIFrame(down) {
+var pTar = null;
+if (document.getElementById){
+pTar = document.getElementById(down);
+}
+else{
+eval('pTar = ' + down + ';');
+}
+if (pTar && !window.opera){
+//begin resizing iframe
+pTar.style.display="block"
+if (pTar.contentDocument && pTar.contentDocument.body.offsetHeight){
+//ns6 syntax
+pTar.height = pTar.contentDocument.body.offsetHeight +20;
+pTar.width = pTar.contentDocument.body.scrollWidth+20;
+}
+else if (pTar.Document && pTar.Document.body.scrollHeight){
+//ie5+ syntax
+pTar.height = pTar.Document.body.scrollHeight;
+pTar.width = pTar.Document.body.scrollWidth;
+}
+}
+}
+</script>

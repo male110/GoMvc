@@ -22,10 +22,12 @@ func (this *Home) OnLoad() {
 
 func (this *Home) Index() *Web.ViewResult {
 	this.ViewData["Title"] = "欢迎使用GoMvc"
+	this.Session["aaa"] = "aaaaa"
 	return this.View()
 }
 func (this *Home) Config() *Web.ViewResult {
 	this.ViewData["Title"] = "配置文件"
+	this.ViewData["aa"] = this.Session["aaa"]
 	return this.View()
 }
 func (this *Home) Route() *Web.ViewResult {
@@ -34,6 +36,7 @@ func (this *Home) Route() *Web.ViewResult {
 }
 func (this *Home) TemplateFunc() *Web.ViewResult {
 	this.ViewData["Title"] = "模板函数"
+
 	return this.View()
 }
 func (this *Home) Binder(u Model.User) *Web.ViewResult {
@@ -49,4 +52,22 @@ func (this *Home) Binder(u Model.User) *Web.ViewResult {
 func (this *Home) Footer() *Web.ViewResult {
 	this.ViewData["Copyright"] = "© Company 2013"
 	return this.View()
+}
+func (this *Home) TestScript() *Web.JavaScriptResult {
+	return this.JavaScript("alert('OK!');", "utf-8")
+}
+func (this *Home) TestJson() *Web.JsonResult {
+	this.ViewData["UserName"] = "张三"
+	this.ViewData["AGe"] = "30"
+	return this.Json(this.ViewData, "utf-8")
+}
+
+type User struct {
+	UserName string
+	Age      int
+}
+
+func (this *Home) TestXml() *Web.XmlResult {
+	u := User{"张三", 19}
+	return this.Xml(u, "utf-8")
 }

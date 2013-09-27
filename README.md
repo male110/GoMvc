@@ -1,5 +1,6 @@
 ﻿
 <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
+<a href="src/docs/index.html">文档</a> 位于src/docs目录下。
 
 <p>有任何问题，可加群：184572648，我基本上每天都在线的</p>
  
@@ -100,4 +101,5 @@ func init() {
 <p>
     &nbsp;</p>
  <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
+<a href="src/docs/index.html">文档</a> 位于src/docs目录下。
 <p>有任何问题，可加群：184572648，我基本上每天都在线的</p>

@@ -25,4 +25,5 @@ COLLATE='utf8_general_ci';
 <p><b>SessionTimeOut：</b>Session超时时间，单位分钟</p>
 <p><b>MemFreeInterval：</b>程序中有定时器，定时对Session进行检查，删除超时的Session，该配置项用来设置多久进行一次检查，单位秒，默认值60。</p>
 <p><b>ListenPort：</b>网站的端口号,该配置改后必须重启程序才能生效。</p>
+<p><b>{{.aa}}</b></p>
 {{RanderAction "home" "footer" "" .Request}}

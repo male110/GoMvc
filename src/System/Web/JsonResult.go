@@ -18,6 +18,12 @@ func (this *JsonResult) ExecuteResult() error {
 	} else {
 		this.Response.Header().Add("Content-Type", "application/json;charset="+this.CharSet)
 	}
+	viewData, ok := this.Data.(map[string]interface{})
+	if ok {
+		delete(viewData, "Action")
+		delete(viewData, "Controller")
+		delete(viewData, "Request")
+	}
 
 	if this.JsonText == "" {
 		if this.Data != nil {

@@ -11,6 +11,7 @@ import (
 	"path"
 	"reflect"
 	"strings"
+	"time"
 )
 
 type WebApplication struct {
@@ -61,6 +62,7 @@ func (this *WebApplication) GetController(routeData map[string]interface{}) (ref
 	return this.controllers.GetController(routeData)
 }
 func (this *WebApplication) Run() error {
+	go this.SessionGC()
 	handler := new(HttpHandler)
 	strPort := fmt.Sprintf(":%v", App.Configs.ListenPort)
 	err := http.ListenAndServe(strPort, handler)
@@ -79,6 +81,16 @@ func (this *WebApplication) watchModify() {
 					Config.LoadConfig(this.Configs)
 				}
 			}
+		}
+	}
+}
+func (this *WebApplication) SessionGC() {
+	for {
+		n := time.Duration(this.Configs.MemFreeInterval) * time.Second
+		timer := time.After(n)
+		<-timer
+		if this.SessionProvider != nil {
+			this.SessionProvider.GC(this.Configs.SessionTimeOut, this.Configs.SessionLocation)
 		}
 	}
 }

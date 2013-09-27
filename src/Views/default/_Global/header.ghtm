@@ -91,7 +91,10 @@
                 <li{{if and (Equal .Controller "Home") (Equal .Action "Config")}} class="active"{{end}}><a href="/Home/Config">配置文件</a></li>
                 <li{{if and (Equal .Controller "Home") (Equal .Action "Route")}} class="active"{{end}}><a href="/Home/Route">路由注册</a></li>
                 <li{{if and (Equal .Controller "Home") (Equal .Action "TemplateFunc")}} class="active"{{end}}><a href="/Home/TemplateFunc">模板函数</a></li>
-                <li{{if and (Equal .Controller "Home") (Equal .Action "Binder")}} class="active"{{end}}><a href="/Home/Binder">参数自动绑定</a></li>
+                <li{{if and (Equal .Controller "Home") (Equal .Action "Binder")}} class="active"{{end}}><a href="/Home/Binder">参数绑定</a></li>
+				<li><a href="/Home/TestScript"  target="_blank">Javascript</a></li>
+				<li><a href="/Home/TestJson"  target="_blank">Json</a></li>
+				<li><a href="/Home/TestXml"  target="_blank">XML</a></li>
               </ul>
             </div>
           </div>
