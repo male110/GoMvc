@@ -10,7 +10,56 @@
 <body>
 
     <p>
-        &nbsp;&nbsp;&nbsp; &nbsp;GoMvc提供了三种Session模式，内存、文件、数据库。默认是存储在文件中的。</p>
+        &nbsp;&nbsp;&nbsp; &nbsp;GoMvc提供了三种Session模式，内存、文件、数据库。默认是存储在文件中的。模式可以<a href="config.htm#session">配置文件</a>中配置。1,文件,2内存,3Mysql数据库。当配置为Mysql时，配置文件中SessionLocation为数据联接字符串。在System\Web\WebApplication.go中开启了一线程，定时对Session进行清理。代码如下：</p>
+    <pre>
+func (this *WebApplication) SessionGC() {
+	for {
+		n := time.Duration(this.Configs.MemFreeInterval) * time.Second
+		timer := time.After(n)
+		<-timer
+		if this.SessionProvider != nil {
+			this.SessionProvider.GC(this.Configs.SessionTimeOut, this.Configs.SessionLocation)
+		}
+	}
+}      
+   </pre>
+
+    <p>
+        &nbsp; &nbsp; &nbsp; &nbsp; this.Configs.MemFreeInterval在<a href="config.htm#FreeInterval">配置文件</a>中配置，表示多久进行一次Session的回收。</p>
+    <p>
+        &nbsp; &nbsp; &nbsp; &nbsp;Session的实现位于System\Session目录下，Session.go中定义了ISession接口，用户可以实现自己的Session，实现ISession接口，ISession接口定义如下：</p>
+<pre>
+ type ISession interface {
+	/*应该在SessionStart里修改Session最后一次的访问时间，并返回Session数据，map[string]interface{}*/
+	StartSession(w http.ResponseWriter, r *http.Request, location string) (map[string]interface{}, error)
+	/*在请求处理结束时调用，与StartSession相对应,用来把Session数据存回存储介质中*/
+	EndSession(data map[string]interface{}, location string, r *http.Request) error
+	/*定时对Session进行清理，timeOut是Session超期时间，单位分钟*/
+	GC(timeOut int, location string)
+}
+</pre>
+
+    <p>
+        &nbsp; &nbsp; &nbsp; &nbsp;SessionBase实现StartSession接口，并提供了一些通用的函数。如果用户要实现自己的Session，可以参考FileSession、MemSession、MysqlSession的实现。Session的创建在Session.go文件中，代码如下：</p>
+    <pre>
+func NewSession(ntype int) ISession {
+	switch ntype {
+	case 1:
+		return NewFileSession()
+	case 2:
+		return NewMemSession()
+	case 3:
+		return NewMysqlSession()
+	default:
+		return NewFileSession()
+	}
+}
+        
+        </pre>
+
+    <p>
+&nbsp;&nbsp;&nbsp;&nbsp;
+        在实现了自己的Session后需要修改该函数，增加新的Session类型。</p>
 
 </body>
 </html>
