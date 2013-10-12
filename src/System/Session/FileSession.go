@@ -91,6 +91,7 @@ func (this *FileSession) EndSession(data map[string]interface{}, location string
 	return nil
 }
 func (this *FileSession) GC(timeOut int, location string) {
+	this.timeOut = timeOut
 	/*如果正在GC中，直接返回，因为遍历可能比较费时*/
 	if this.gcing {
 		return

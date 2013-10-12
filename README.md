@@ -3,10 +3,18 @@
 <a href="src/docs/index.html">文档</a> 位于src/docs目录下。
 
 <p>有任何问题，可加群：184572648，我基本上每天都在线的</p>
- 
+<a href="#updatelog">更新日志</a>
  <a href="#build"> 编译</a><br />
 <a href="#config">  配置文件</a><br />
 <a href="#route">  路由注册</a>
+<p>
+  <b>
+    <a name="updatelog">更新日志</a>
+  </b>
+  <div>
+    2013-10-12　　　修复路由和FieSession的Bug。
+  </div>
+</p>
 <p>GoMVC是一个简单，便捷的MVC框架。程序注释全部使用中文，很适合国人使用。文档也很详细。
 <a name="build">编译</a>时，需要把GoMvc目录设置为GOPATH.
 </p>
@@ -101,5 +109,5 @@ func init() {
 <p>
     &nbsp;</p>
  <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
-<a href="src/docs/index.html">文档</a> 位于src/docs目录下。
+文档位于src/docs目录下。
 <p>有任何问题，可加群：184572648，我基本上每天都在线的</p>
