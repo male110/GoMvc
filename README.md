@@ -15,8 +15,12 @@
     2013-10-12　　　修复路由和FieSession的Bug。
   </div>
 </p>
-<p>GoMVC是一个简单，便捷的MVC框架。程序注释全部使用中文，很适合国人使用。文档也很详细。
-<a name="build">编译</a>时，需要把GoMvc目录设置为GOPATH.
+<p>
+<a name="build"><b>编译</b></a>
+<div>
+GoMVC是一个简单，便捷的MVC框架。程序注释全部使用中文，很适合国人使用。文档也很详细。
+编译时，需要把GoMvc目录设置为GOPATH.
+</div>
 </p>
 <p>
 <b><a name="config">配置文件</a></b>
