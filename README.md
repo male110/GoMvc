@@ -12,6 +12,7 @@
     <a name="updatelog">更新日志</a>
   </b>
   <div>
+    2013-10-14　　　增加域的功能，上传漏掉的Controller目录。<br/>
     2013-10-12　　　修复路由和FieSession的Bug。
   </div>
 </p>
