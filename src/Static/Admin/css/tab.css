@@ -1,0 +1,46 @@
+body {margin: 0;}
+
+/*超链接样式*/
+a:link {font-size:12px; text-decoration:none; color:#06527d;}
+a:visited {font-size:12px; text-decoration:none; color:#06527d;}
+a:hover {font-size:12px; text-decoration:underline; color:#FF0000;}
+
+a.v1:link {font-size:12px; text-decoration:none; color:#000000;}
+a.v1:visited {font-size:12px; text-decoration:none; color:#000000;}
+a.v1:hover {font-size:12px; text-decoration:underline; color:#FF0000;}
+
+/*表格第一行样式*/
+.first_line {line-height: 7px;}
+.first_line_left {width: 11px;line-height: 7px;	background-image: url(../images/tab_03.gif);	background-repeat: no-repeat;}
+.first_line_center{background-image: url(../images/tab_05.gif); line-height: 7px;}
+.first_line_right {width: 11px;line-height: 7px;	background-image: url(../images/tab_07.gif);	background-repeat: no-repeat;}
+
+/*表格第二行样式*/
+.second_line_1 {width:11px; line-height: 27px; background-image: url(../images/tab_09.gif); background-repeat: no-repeat;}
+.second_line_2 {width: 300px; background-image: url(../images/tab_10.gif);}
+.second_line_3 {width:32px; background-image: url(../images/tab_11.gif); font-weight: bold;background-repeat: no-repeat;}
+.second_line_4 { background-image: none; background-image: url(../images/tab_12.gif); text-align: right;}
+.second_line_5 {width: 11px; background-image: url(../images/tab_16.gif); background-repeat: no-repeat;}
+.second_line_span { font-weight: bolder; color:#ffffff; font-size:12px;}
+
+/*表格第三行样式*/
+.third_line_left {width: 11px; background-image: url(../images/tab_21.gif); background-repeat: repeat-y;}
+.third_line_right{width: 11px; background-image: url(../images/tab_22.gif); background-repeat: repeat-y;}
+
+/*表格第四行样式*/
+.fourth_line_left {width: 11px; line-height: 31px; background-image: url(../images/tab_25.gif); background-repeat: no-repeat;}
+.fourth_line_center {background-image: url(../images/tab_27.gif);}
+.fourth_line_right{width: 11px; line-height: 31px; background-image: url(../images/tab_28.gif); background-repeat: no-repeat;}
+
+/*数据列表样式*/
+.tab_body{width: 100%;line-height: 22px;border-collapse:collapse;table-layout: fixed; text-align: center;}
+.td1 {line-height: 22px; border: solid 1px #e1e1e1; font-size: 12px;}
+.td2 {line-height: 22px; border: solid 1px #e1e1e1; font-size: 12px; background-image: url(../images/tab_29.gif); font-weight: bolder;}
+.ft{font-size: 12px;}
+
+/*交替背景样式*/
+.cellColor { background-image: url(../images/tab_29.gif); font-size: 12px; font-weight: bolder;border: solid 1px #e1e1e1;}
+.cellChangeColor{ background-image: url(../images/tab_30.gif);font-size: 12px; font-weight: bolder;border: solid 1px #e1e1e1;}
+
+/*输入框样式*/
+.it {	height: 16px;width:25px;}
