@@ -50,13 +50,17 @@
                         <li class="active"><a href="intro.html" onclick="selectItem(this.parentNode)" target="main">简介</a></li>
                         <li><a href="dir.htm" target="main" onclick="selectItem(this.parentNode)">目录结构</a></li>
                         <li><a href="config.htm" target="main" onclick="selectItem(this.parentNode)">配置文件</a></li>
-                        <li><a href="route.htm" target="main" onclick="selectItem(this.parentNode)">路由</a></li>      
-                        <li><a href="controler.htm" target="main" onclick="selectItem(this.parentNode)">Controller与Action</a></li> 
+                        <li><a href="route.htm" target="main" onclick="selectItem(this.parentNode)">路由</a></li>    
+                        <li><a href="controler.htm" target="main" onclick="selectItem(this.parentNode)">Controller</a></li> 
+                        <li><a href="action.htm" target="main" onclick="selectItem(this.parentNode)">Action</a></li> 
+                        
+                        
                         <li><a href="TplFunc.htm" target="main" onclick="selectItem(this.parentNode)">模板函数</a></li>  
                         <li><a href="binder.htm" target="main" onclick="selectItem(this.parentNode)">参数绑定</a></li>
                         <li><a href="Log.htm" target="main" onclick="selectItem(this.parentNode)">日志</a></li>                         
                         <li><a href="session.htm" target="main" onclick="selectItem(this.parentNode)">Session</a></li> 
 						<li><a href="tpl.htm" target="main" onclick="selectItem(this.parentNode)">视图引擎</a></li>   
+						<li><a href="area.htm" target="main" onclick="selectItem(this.parentNode)">区域area</a></li>   
                     </ul>
                 </div>
                 <!--/.well -->
@@ -104,26 +108,24 @@ function selectItem(item)
 }
 
 function ResizeIFrame(down) {
-var pTar = null;
-if (document.getElementById){
-pTar = document.getElementById(down);
-}
-else{
-eval('pTar = ' + down + ';');
-}
-if (pTar && !window.opera){
-//begin resizing iframe
-pTar.style.display="block"
-if (pTar.contentDocument && pTar.contentDocument.body.offsetHeight){
-//ns6 syntax
-pTar.height = pTar.contentDocument.body.offsetHeight +20;
-pTar.width = pTar.contentDocument.body.scrollWidth+20;
-}
-else if (pTar.Document && pTar.Document.body.scrollHeight){
-//ie5+ syntax
-pTar.height = pTar.Document.body.scrollHeight;
-pTar.width = pTar.Document.body.scrollWidth;
-}
-}
+    var pTar = null;
+    if (document.getElementById) {
+        pTar = document.getElementById(down);
+    } else {
+        eval('pTar = ' + down + ';');
+    }
+    if (pTar && !window.opera) {
+        //begin resizing iframe
+        pTar.style.display = "block"
+        if (pTar.contentDocument && pTar.contentDocument.body.offsetHeight) {
+            //ns6 syntax
+            pTar.height = pTar.contentDocument.body.offsetHeight + 30;
+           // pTar.width = pTar.contentDocument.body.scrollWidth + 20;
+        } else if (pTar.Document && pTar.Document.body.scrollHeight) {
+            //ie5+ syntax
+            pTar.height = pTar.Document.body.scrollHeight+20;
+           // pTar.width = pTar.Document.body.scrollWidth;
+        }
+    }
 }
 </script>

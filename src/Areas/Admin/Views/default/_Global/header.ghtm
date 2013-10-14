@@ -1,0 +1,5 @@
+{{define "header"}}
+<p>
+The&nbsp;Header&nbsp;in&nbsp;_Global&nbsp;folder
+</p>
+{{end}}

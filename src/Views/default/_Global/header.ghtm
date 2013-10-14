@@ -79,10 +79,10 @@
 </head>
 <body>
   <div class="container">
- 
+ <span  class="muted" style="float:right"><a href="/Admin/Home/Index"><h3 class="muted">进入后台</h3></a> </span>
       <div class="masthead">
         <h3 class="muted">GoMVC</h3>
-	
+        
         <div class="navbar">
           <div class="navbar-inner">
             <div class="container">

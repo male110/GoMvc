@@ -15,6 +15,7 @@ type StaticFile struct {
 	FilePath string
 }
 type Config struct {
+	IsDebug          bool
 	ShowErrors       bool
 	CookieDomain     string
 	LogPath          string
@@ -127,6 +128,12 @@ func LoadConfig(c *Config) {
 func processXmlTocken(c *Config, xmlName, data string) {
 	data = strings.Trim(data, "\n")
 	switch xmlName {
+	case "IsDebug":
+		var err error
+		c.IsDebug, err = strconv.ParseBool(data)
+		if err != nil {
+			AppLog.Add("解析配置文件IsDebug时出错:" + err.Error() + ",配置错误，只能是true或false")
+		}
 	case "ShowErrors":
 		var err error
 		c.ShowErrors, err = strconv.ParseBool(data)
@@ -196,7 +203,7 @@ func isExist(path string) bool {
 	return err == nil
 }
 func NewDefault() *Config {
-	c := &Config{Theme: "default", LogPath: "Log", LogFileMaxSize: 5, DriverName: "mysql", SessionType: 1, SessionLocation: "sessions", SessionTimeOut: 30, MemFreeInterval: 60}
+	c := &Config{IsDebug: true, Theme: "default", LogPath: "Log", LogFileMaxSize: 5, DriverName: "mysql", SessionType: 1, SessionLocation: "sessions", SessionTimeOut: 30, MemFreeInterval: 60}
 	return c
 }
 

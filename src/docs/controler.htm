@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
     <title>Controller与Action</title>
@@ -34,64 +34,23 @@ func init() {
 <p>
     另外<span style=" color:#000000;">提供了ResponseEnd函数，在调用了ResponseEnd后，请求将结束，如在OnLoad中调用了this.ResponseEnd()，Action将得不到执行，请求结束。</span></p>
 <p>
-    </p>
-<p>
-  <b>Action</b>的返回结果通常为IActionResult对像，有ViewResult、JavaScriptResult、JsonResult、XmlResult。具体实现可以参考&quot;System/Web/Controller.go&quot;文件中的实代码。下面分别介绍：</p>
-<ul>
-<li><b>ViewResult:</b>表示当前返回结果为HTML页面，通常用法如下：
+    Controller的定义如下：</p>
 <pre>
-func (this *Home) Index() *Web.ViewResult {
-	this.ViewData["Title"] = "欢迎使用GoMvc"
-	return this.View()
+type Controller struct {
+	Request       *http.Request
+	Response      http.ResponseWriter
+	ViewData      map[string]interface{}
+	Session       map[string]interface{}
+	RouteData     map[string]interface{}
+	QueryString   map[string]string
+	Form          map[string]string
+	...
+	Cookies       map[string]string
+	.....
 }
 </pre>
-this.View接受一到两个参数，第一个参数为模板的名称，第二个为主题的名称，两个参数都可以省略，
-第一个参数省略时或为""时，Action做为模板名称，第二个参数省略时为默认的主题。  
-模板引擎将会在Views/Home目录下去找Index.ghtm文件，并展示到前端。Action 通过ViewData来向View模板传送数据的。在模板中展示ViewData中的数据，如下所示：
-<pre>
-&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
-&lt;html xmlns="http://www.w3.org/1999/xhtml" &gt;
-&lt;head&gt;
-     &lt;title&gt;{{.Title}}&lt;/title&gt;
-</pre>
-有关模板的语法，可以参考<a href="http://golang.org/pkg/text/template/">官方文档</a>。
-</li>
-<li>
-<b>JavaScriptResult:</b>用来返回一段JavaScript脚本，示例代码如下：
-<pre>
-func (this *Home) Script() *Web.JavaScriptResult {
-	return this.JavaScript("alert('OK!');", "utf-8")
-}
-</pre>
-第一个参数为要输出的脚本，第二个参数是字符编码，可省略，默认为utf-8。
-</li>
-<li>
-<b>JsonResult:</b>用来输出JSON字符串，示例代码如下：
-<pre>
-func (this *Home) TestJson() *Web.JsonResult {
-	this.ViewData["UserName"] = "张三"
-	this.ViewData["AGe"] = "30"
-	return this.Json(this.ViewData, "utf-8")
-}
-</pre>
-第一个参数可以是JSON字符串，struct或map对象，第二个参数是字符编码，可省略，默认为utf-8。当第一个参数为map[string]interface{}类型时，map的key中不能包含Action，Controller，Request键值，这些在展示时会被屏蔽掉。
-主要是因为ViewData中，默认会有Action,Controller,Request几个值，如果不屏蔽这几个值，this.Json(this.ViewData, "utf-8")得到的将不是我们想要的结果。
-</li>
-<li>
-<b>XmlResult:</b>用来输出XML文档，示例代码如下：
-<pre>
-type User struct {
-	UserName string
-	Age      int
-}
-
-func (this *Home) TestXml() *Web.XmlResult {
-	u := User{"张三", 19}
-	return this.Xml(u, "utf-8")
-}
-</pre>
-第一个参数可以是XML字符串或struct结构体，但不能是map对象。第二个参数是字符编码，可省略，默认为utf-8。
-</li>
-</ul>  
+    <p>
+        <b>Form</b>中存放了所有的Post过来的表单值，<b>QueryString </b>
+        存放了地址栏参数的值。当值重复时，这里存放的是最后一次的值，如a=1&amp;a=2，最后保存的值是2。Cookies存放了所有Cookies的值。</p>
 </body>
 </html>

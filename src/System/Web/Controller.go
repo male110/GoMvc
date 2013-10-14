@@ -142,5 +142,9 @@ func (this *Controller) View(args ...string) *ViewResult {
 	result.ActionName = actionName
 	result.ControllerName = controllerName
 	result.Theme = themeName
+	areaName, ok := this.RouteData["area"]
+	if ok {
+		result.Area = fmt.Sprintf("%v", areaName)
+	}
 	return result
 }

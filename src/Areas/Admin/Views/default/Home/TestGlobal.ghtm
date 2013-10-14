@@ -1,0 +1,2 @@
+{{template "header" .}}
+本页面主要是用来测试前台，后台的Header会不会混掉。

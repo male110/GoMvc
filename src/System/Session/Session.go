@@ -5,6 +5,7 @@ import (
 	. "System/Log"
 	"crypto/rand"
 	"encoding/hex"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -31,6 +32,7 @@ type SessionBase struct {
 func (this *SessionBase) StartSession(w http.ResponseWriter, r *http.Request, location string) (map[string]interface{}, error) {
 	sid := this.getSessionId(r)
 	if sid == "" {
+		fmt.Println("SessionId不存在")
 		//cookie不存在，产生一个新的Session
 		s, err := this.newSession(location, w, r)
 		if err != nil {

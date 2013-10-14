@@ -40,16 +40,23 @@ func (this *HttpHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 	routeData := Routing.RouteTable.GetRouteData(requestPath)
+	//路由匹配失败
 	if routeData == nil {
 		//404页面不存在
-		this.Show404(rw)
+		this.Show404(rw, "")
 		return
 	}
 	//创建 Controller
 	ctl, err := App.GetController(routeData)
+	//没有对应的Controller,或Action
+	_, ok := routeData["area"]
+	var strArea string
+	if ok {
+		strArea = fmt.Sprintf("%v", routeData["area"])
+	}
 	if err != nil {
 		if err == ControllerNotExist || err == ActionNotExist {
-			this.Show404(rw)
+			this.Show404(rw, strArea)
 		} else {
 			panic(err)
 		}
@@ -57,8 +64,11 @@ func (this *HttpHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 	strMethodName := routeData["action"].(string)
 	method := ctl.MethodByName(strMethodName)
+	//Action不存在，这个情况应该不存在
 	if !method.IsValid() {
-		panic("action '" + strMethodName + "'不存在")
+		//404页面不存在
+		this.Show404(rw, strArea)
+		return
 	}
 	//获取Session
 	sessions, err := App.SessionProvider.StartSession(rw, r, App.Configs.SessionLocation)
@@ -246,9 +256,11 @@ func (this *HttpHandler) EndRequest(sessions map[string]interface{}, cookies map
 }
 
 //显示404页面
-func (this *HttpHandler) Show404(w http.ResponseWriter) {
+func (this *HttpHandler) Show404(w http.ResponseWriter, strArea string) {
+	viewData := make(map[string]interface{})
+	viewData["area"] = strArea
 	result := ViewResult{
-		ViewData:       nil,
+		ViewData:       viewData,
 		ViewEngine:     App.ViewEngine,
 		Response:       w,
 		ActionName:     "404",
@@ -257,7 +269,9 @@ func (this *HttpHandler) Show404(w http.ResponseWriter) {
 
 	err := result.ExecuteResult()
 	if err != nil {
-		App.Log.Add("HttpHandler.Show404,页面展示时出错:" + err.Error())
+		strErr := "HttpHandler.Show404,页面展示时出错:" + err.Error()
+		App.Log.Add(strErr)
+		w.Write([]byte(strErr))
 	}
 }
 
@@ -277,6 +291,8 @@ func (this *HttpHandler) Show505(w http.ResponseWriter, err error) {
 
 	err = result.ExecuteResult()
 	if err != nil {
-		App.Log.Add("HttpHandler.Show505,页面展示时出错:" + err.Error())
+		strErr := "HttpHandler.Show505,页面展示时出错:" + err.Error()
+		App.Log.Add(strErr)
+		w.Write([]byte(strErr))
 	}
 }

@@ -1,0 +1,81 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Left</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="/Static/JqTree/jquery.treeview.css" />
+    <title>无标题文档</title>
+    <style type="text/css">
+        <!-- 
+        body
+        {
+            margin-left: 0px;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+        }
+        a:link
+        {
+            font-size: 12px;
+            text-decoration: none;
+            color: #43860c;
+        }
+        a:visited
+        {
+            font-size: 12px;
+            text-decoration: none;
+            color: #43860c;
+        }
+        a:hover
+        {
+            font-size: 12px;
+            text-decoration: none;
+            color: #FF0000;
+        }
+        -- ></style>
+</head>
+<body>
+    <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td valign="top">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="table-layout: fixed">
+                    <!-- <tr>
+        <td height="26" background="/Static/Admin/images/main_21.gif">&nbsp;</td>
+      </tr>-->
+                    <tr>
+                        <td style="line-height: 4px; background: url(/Static/Admin/images/main_38.gif) ;background-position:top;">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul id="browser" class="filetree treeview-famfamfam">
+        <li><span class="folder">功能菜单</span>
+            <ul>
+                <li><span class="file">菜单 1</span></li>
+                <li><span class="file">菜单 2</span>
+                </li>
+                <li><span class="file">菜单 3</span></li>
+                <li><span class="file">菜单 4</span></li>
+            </ul>
+        </li>
+    </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    
+</body>
+</html>
+
+<script src="/Static/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+
+<script src="/Static/JqTree/jquery.treeview.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#browser").treeview();
+	});
+</script>
+

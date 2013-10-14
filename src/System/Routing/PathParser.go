@@ -1,7 +1,6 @@
 package Routing
 
 import (
-	//	"regexp"
 	"System/Routing/PathSegmentType"
 	"strings"
 )
@@ -29,7 +28,7 @@ func (this *PathParser) MatchSegment(routseg RoutSegment, pathSegIndex int, arrS
 	paraEndIndex := pathSegmentLen - 1
 
 	subCount := len(routseg.SubSegments)
-	for subIndex := subCount - 1; subIndex >= 0; subIndex++ {
+	for subIndex := subCount - 1; subIndex >= 0; subIndex-- {
 		subItem := routseg.SubSegments[subIndex]
 		if paraEndIndex < 0 {
 			return false

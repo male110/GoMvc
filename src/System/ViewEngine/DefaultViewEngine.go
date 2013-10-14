@@ -1,6 +1,7 @@
 package ViewEngine
 
 import (
+	"System/Config"
 	"System/TemplateFunc"
 	"errors"
 	"html/template"
@@ -16,7 +17,7 @@ import (
 var PageNoFind error = errors.New("View不存在")
 
 type IViewEngine interface {
-	RenderView(controllerName, actionName, theme string, viewData map[string]interface{}, writer http.ResponseWriter) error
+	RenderView(areaName, controllerName, actionName, theme string, viewData map[string]interface{}, writer http.ResponseWriter) error
 }
 
 /*全局模板*/
@@ -27,26 +28,28 @@ type GlobalTemplate struct {
 
 //默认的模板引擎
 type DefaultViewEngine struct {
-	SearchLocation []string                   //模板的搜位置
-	Extension      string                     //扩展名
-	globalTpl      map[string]*GlobalTemplate //按照不同的主题进行存放
-	mutex          sync.RWMutex
+	ViewLocation     []string                   //模板的搜位置
+	AreaViewLocation []string                   //area模板的位置
+	Extension        string                     //扩展名
+	globalTpl        map[string]*GlobalTemplate //按照不同的主题进行存放
+	mutex            sync.RWMutex
 }
 
 func NewDefualtEngine() *DefaultViewEngine {
 	e := &DefaultViewEngine{Extension: ".ghtm"}
-	e.SearchLocation =
+	e.ViewLocation =
 		[]string{"Views/{theme}/{controller}/{action}",
-			"Views/{theme}/_Global/{action}",
-			"{area}/Views/{theme}/{controller}/{action}",
-			"{area}/Views/{theme}/_Global/{action}"}
+			"Views/{theme}/_Global/{action}"}
+
+	e.AreaViewLocation =
+		[]string{"Areas/{area}/Views/{theme}/{controller}/{action}",
+			"Areas/{area}/Views/{theme}/_Global/{action}"}
 	return e
 }
 
 //展示
-func (this *DefaultViewEngine) RenderView(controllerName, actionName, theme string, viewData map[string]interface{}, writer http.ResponseWriter) error {
-	locations := this.getViewLocation(controllerName, actionName, theme)
-
+func (this *DefaultViewEngine) RenderView(areaName, controllerName, actionName, theme string, viewData map[string]interface{}, writer http.ResponseWriter) error {
+	locations := this.getViewLocation(areaName, controllerName, actionName, theme)
 	//在指定位置搜索模板
 	var strTplPath string
 	for _, l := range locations {
@@ -62,7 +65,7 @@ func (this *DefaultViewEngine) RenderView(controllerName, actionName, theme stri
 		return PageNoFind
 	}
 	//取全局模板
-	glbTpl, err := this.getGlobalTemplate(theme)
+	glbTpl, err := this.getGlobalTemplate(areaName, theme)
 	if err != nil {
 		return err
 	}
@@ -80,32 +83,49 @@ func (this *DefaultViewEngine) RenderView(controllerName, actionName, theme stri
 	err = tpl.Execute(writer, viewData)
 	return err
 }
-func (this *DefaultViewEngine) getViewLocation(controllerName, actionName, theme string) []string {
-	locations := make([]string, len(this.SearchLocation))
+func (this *DefaultViewEngine) getViewLocation(areaName, controllerName, actionName, theme string) []string {
+	var locations []string
 	i := 0
-	for _, v := range this.SearchLocation {
-		str := strings.Replace(v, "{controller}", controllerName, -1)
-		str = strings.Replace(str, "{action}", actionName, -1)
-		str = strings.Replace(str, "{theme}", theme, -1) + this.Extension
-		str = strings.Replace(str, "//", "/", -1)
-		locations[i] = str
-		i++
+	if areaName == "" {
+		//普通的模板
+		locations = make([]string, len(this.ViewLocation))
+		for _, v := range this.ViewLocation {
+			str := strings.Replace(v, "{controller}", controllerName, -1)
+			str = strings.Replace(str, "{action}", actionName, -1)
+			str = strings.Replace(str, "{theme}", theme, -1) + this.Extension
+			str = strings.Replace(str, "//", "/", -1)
+			locations[i] = str
+			i++
+		}
+	} else {
+		//域模板
+		locations = make([]string, len(this.AreaViewLocation))
+		for _, v := range this.AreaViewLocation {
+			str := strings.Replace(v, "{area}", areaName, -1)
+			str = strings.Replace(str, "{controller}", controllerName, -1)
+			str = strings.Replace(str, "{action}", actionName, -1)
+			str = strings.Replace(str, "{theme}", theme, -1) + this.Extension
+			str = strings.Replace(str, "//", "/", -1)
+			locations[i] = str
+			i++
+		}
 	}
 	return locations
 }
 
-func (this *DefaultViewEngine) getGlobalTemplate(theme string) (string, error) {
+func (this *DefaultViewEngine) getGlobalTemplate(area, theme string) (string, error) {
 	if this.globalTpl == nil {
 		this.mutex.Lock()
 		this.globalTpl = make(map[string]*GlobalTemplate)
 		this.mutex.Unlock()
 	}
+	strKeyName := area + theme
 	this.mutex.RLock()
-	globalItem, ok := this.globalTpl[theme]
+	globalItem, ok := this.globalTpl[strKeyName]
 	this.mutex.RUnlock()
 	//为了减小IO操作，每隔一分钟，才对Global进行一次更新
-	if !ok || time.Now().Sub(globalItem.lastReadTime).Minutes() > 1 {
-		isChange, files, err := this.isGlobalChanged(theme)
+	if Config.AppConfig.IsDebug || !ok || time.Now().Sub(globalItem.lastReadTime).Minutes() > 1 {
+		isChange, files, err := this.isGlobalChanged(area, theme)
 
 		if err != nil {
 			return "", err
@@ -119,7 +139,7 @@ func (this *DefaultViewEngine) getGlobalTemplate(theme string) (string, error) {
 				//this.globalTpl中没有，新建一个
 				globalItem = &GlobalTemplate{lastReadTime: time.Now(), gloableTplContent: tplContent}
 				this.mutex.Lock()
-				this.globalTpl[theme] = globalItem
+				this.globalTpl[strKeyName] = globalItem
 				this.mutex.Unlock()
 
 			} else {
@@ -135,16 +155,22 @@ func (this *DefaultViewEngine) getGlobalTemplate(theme string) (string, error) {
 }
 
 /*判断全局文件是否改变,并返回所有的全局模板路径*/
-func (this *DefaultViewEngine) isGlobalChanged(theme string) (bool, []string, error) {
+func (this *DefaultViewEngine) isGlobalChanged(area, theme string) (bool, []string, error) {
 	var files []string
 	isChange := false
-	strGlobalDir := path.Join("Views", theme, "_Global")
+	var strGlobalDir string
+	if area == "" {
+		strGlobalDir = path.Join("Views", theme, "_Global")
+	} else {
+		strGlobalDir = path.Join("Areas/", area, "Views", theme, "_Global")
+	}
 
 	fs, err := ioutil.ReadDir(strGlobalDir)
 	if err != nil {
 		return false, nil, nil
 	}
-	globalItem, ok := this.globalTpl[theme]
+	strKeyName := area + theme
+	globalItem, ok := this.globalTpl[strKeyName]
 	if !ok {
 		isChange = true
 	}

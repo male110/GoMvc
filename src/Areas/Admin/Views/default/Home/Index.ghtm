@@ -1,0 +1,12 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>管理平台</title>
+</head>
+<frameset rows="61,*,24" cols="*" framespacing="0" frameborder="no" border="0">
+  <frame src="/Admin/Home/Top" name="topFrame" scrolling="No" noresize="noresize" id="topFrame" />
+  <frame src="/Admin/Home/Center" name="mainFrame" id="mainFrame" />
+  <frame src="/Admin/Home/Footer" name="bottomFrame" scrolling="No" noresize="noresize" id="bottomFrame" />
+</frameset>
+<noframes><body>
+</html>
