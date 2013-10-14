@@ -12,7 +12,7 @@ import (
 //当前配置文件的端口为6080,输入http://localhost:6080/可查看运行结果
 //注册路由
 func init() {
-	//区域的标准路由
+	//Admin域的标准路由
 	RouteTable.AddRote(&RouteItem{
 		Name:     "admin_area",
 		Url:      "admin/{controller}/{action}",
