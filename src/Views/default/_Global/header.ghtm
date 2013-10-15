@@ -24,7 +24,7 @@
 			<a href="/Home/TestXml" target="_blank">XML</a>
         </div>
 		 <div class="sub">
-        	<a href="/Admin/Home/Index">进入后台</a>
+        	<a href="/Admin/Home/Index" style="color:white"><b>进入后台</b></a>
         </div>
     </div>
 </div>
