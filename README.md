@@ -1,6 +1,5 @@
 ﻿
 <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
-<a href="src/docs/index.html">文档</a> 位于src/docs目录下。
 
 <p>有任何问题，可加QQ群：184572648，我基本上每天都在线的</p>
 <a href="#updatelog">更新日志</a><br/>
@@ -129,5 +128,5 @@ func init() {
     2，System/fsnotify&nbsp; 这是一个监控文件修改的第三方包，已下载到System目录，用户不需再自己安装。该包位于 
  <a href="https://github.com/howeyc/fsnotify" target="_blank"> https://github.com/howeyc/fsnotify</a>  </p>
  <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
-文档位于src/docs目录下。
+
 <p>有任何问题，可加QQ群：184572648，我基本上每天都在线的</p>
