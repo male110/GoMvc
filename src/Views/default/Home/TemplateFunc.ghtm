@@ -1,4 +1,5 @@
 {{template "header" .}}
+<h1 class="phead">模板函数</h1>
 Go中默认提供了and,not,len等函,但还不够用，所以在System/TemplateFunc中又自定义了一些模板函数。
 <ul>
 <li>RanderAction：在当前位置嵌入另一个页面。该函数定义如下：

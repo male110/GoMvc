@@ -1,5 +1,5 @@
 {{template "header" .}}
-<h1>路由</h1>
+<h1 class="phead">路由注册</h1>
  <p>用RouteTable.AddRote来注册路由。其格式如下：
 <pre>
 //注册标准路由

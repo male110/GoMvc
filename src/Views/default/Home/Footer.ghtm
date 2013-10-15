@@ -1,8 +1,6 @@
- </div>
+
 <hr/>
 {{.Copyright}}
 </div>
 </body>
 </html>
-<script src="/Static/js/jquery-1.10.2.min.js"></script>
-<script src="/Static/js/bootstrap.min.js"></script>

@@ -1,5 +1,5 @@
 {{template "header" .}}
-
+<h1 class="phead">配置文件</h1>
 <p>网站的配置文件为web.config，格式为XML，配置项的内容如下：</p>
 <p><b>ShowErrors：</b>是否显示错误信息。true,显示；false,不显示。建义在测试时可以设置为true,发布到正式环境后设置为false。</p>
 <p><b>CookieDomain：</b>Cookies的Domain信息，可用来共享cookie。如domain.com，和sub.domain.com，可以通过把CookieDomain统一设置为domain.com来共享cookies信息</p>

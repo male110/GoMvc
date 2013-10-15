@@ -1,6 +1,10 @@
 {{template "header" .}}
-<h2>欢迎使用GoMVC</h2>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;GoMVC是一个简单，便捷的MVC框架。程序注释全部使用中文，很适合国人使用。文档也很详细。</p>
+<div class="heading">
+  <div class="wrapper">
+  	<h1>欢迎使用GoMVC</h1>
+    <h2>GoMVC是一个简单，便捷的MVC框架。程序注释全部使用中文，很适合国人使用。文档也很详细。<br>
+    QQ交流群：184572648。</h2>
+  </div>
+</div>
 
 {{RanderAction "home" "footer" "" .Request}}

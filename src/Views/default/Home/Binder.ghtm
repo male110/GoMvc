@@ -1,4 +1,5 @@
 {{template "header" .}}
+<h1 class="phead">参数自动绑定</h1>
 GoMvc支持参数的自动绑定，但参数类型必须是struct类型才可以，因为Go中没有办法来获取函数参数的名称。
 如我们定义一个User类，如下：
 <pre>
