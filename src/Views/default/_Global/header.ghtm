@@ -23,6 +23,9 @@
 			<a href="/Home/TestJson"  target="_blank">Json</a>
 			<a href="/Home/TestXml" target="_blank">XML</a>
         </div>
+		 <div class="sub">
+        	<a href="/Admin/Home/Index">进入后台</a>
+        </div>
     </div>
 </div>
 <div class="wrapper">
