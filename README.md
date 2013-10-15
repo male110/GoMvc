@@ -2,11 +2,12 @@
 <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
 <a href="src/docs/index.html">文档</a> 位于src/docs目录下。
 
-<p>有任何问题，可加群：184572648，我基本上每天都在线的</p>
+<p>有任何问题，可加QQ群：184572648，我基本上每天都在线的</p>
 <a href="#updatelog">更新日志</a><br/>
  <a href="#build"> 编译</a><br />
 <a href="#config">  配置文件</a><br />
-<a href="#route">  路由注册</a>
+<a href="#route">  路由注册</a><br />
+<a href="#yilai">对其它包的依赖</a>
 <p>
   <b>
     <a name="updatelog">更新日志</a>
@@ -111,8 +112,22 @@ func init() {
 }
 </pre>
 对于Controller的命名没有严格的要求，可以用Home,也可以用HomeController
+
+
 <p>
-    &nbsp;</p>
+  <b>
+    <a name="yilai">对其它包的依赖</a>
+  </b>
+</p>
+<p>
+  GOMvc追求简单，实用，尽可能减少对其它包的依赖。在GoMvc中有两个地方用到了第三方包：
+</p>
+<p>
+    1，System/Session/MysqlSession.go 该文件实现了以mysql的方式来存储Session的功能，需要mysql的戏动。可以此下载<a 
+        href="https://github.com/go-sql-driver/mysql" target="_blank">https://github.com/go-sql-driver/mysql</a></p>
+<p>
+    2，System/fsnotify&nbsp; 这是一个监控文件修改的第三方包，已下载到System目录，用户不需再自己安装。该包位于 
+ <a href="https://github.com/howeyc/fsnotify" target="_blank"> https://github.com/howeyc/fsnotify</a>  </p>
  <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
 文档位于src/docs目录下。
-<p>有任何问题，可加群：184572648，我基本上每天都在线的</p>
+<p>有任何问题，可加QQ群：184572648，我基本上每天都在线的</p>
