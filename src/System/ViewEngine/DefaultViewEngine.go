@@ -76,6 +76,7 @@ func (this *DefaultViewEngine) RenderView(areaName, controllerName, actionName, 
 		return err
 	}
 	strTplContent := glbTpl + string(buf)
+
 	tpl, err = tpl.Parse(strTplContent)
 	if err != nil {
 		return err
@@ -150,6 +151,9 @@ func (this *DefaultViewEngine) getGlobalTemplate(area, theme string) (string, er
 
 		}
 
+	}
+	if globalItem == nil {
+		return "", nil
 	}
 	return globalItem.gloableTplContent, nil
 }
