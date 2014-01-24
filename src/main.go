@@ -28,6 +28,14 @@ func init() {
 
 }
 func main() {
+	//程序意外退时，记录错误日志
+	defer func() {
+		if e := recover(); e != nil {
+			err := e.(error)
+			App.Log.Add(fmt.Sprintf("%v", err.Error()))
+			fmt.Println(err)
+		}
+	}()
 	err := App.Run()
 	fmt.Println(err)
 }
