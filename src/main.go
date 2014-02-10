@@ -7,6 +7,8 @@ import (
 	. "System/Routing"
 	. "System/Web"
 	"fmt"
+
+	"runtime"
 )
 
 //当前配置文件的端口为6080,输入http://localhost:6080/可查看运行结果
@@ -36,6 +38,9 @@ func main() {
 			fmt.Println(err)
 		}
 	}()
+	//设置最大可同时执行的进程数
+	runtime.GOMAXPROCS(runtime.NumCPU()*2 - 1)
+	//监听http请求
 	err := App.Run()
 	fmt.Println(err)
 }

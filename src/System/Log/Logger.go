@@ -7,6 +7,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"path/filepath"
 )
 
 type Logger struct {
@@ -25,6 +27,9 @@ strLocation:日志保存的位置
 maxFileSize:文件大小限制,单位MB
 */
 func New(strLocation string, maxLogSize float64) *Logger {
+	//设置当前工作目录
+	strCurrentDir := filepath.Dir(os.Args[0])
+	os.Chdir(strCurrentDir)
 
 	log := new(Logger)
 	log.SetLocation(strLocation)
