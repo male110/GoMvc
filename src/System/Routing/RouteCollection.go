@@ -1,6 +1,7 @@
 package Routing
 
 import (
+	. "System/Log"
 	"errors"
 	"strings"
 )
@@ -52,6 +53,13 @@ func (this *RouteCollection) AddRote(item *RouteItem) (*Route, error) {
 	return this.Add(item.Name, item.Url, item.Defaults, item.Constraints)
 }
 func (this *RouteCollection) GetRouteData(requestPath string) map[string]interface{} {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			err := e.(error)
+			AppLog.Add("In RouteCollection.GetRouteData:\t" + err.Error())
+		}
+	}()
 	if len(this.routes) > 0 {
 		for _, v := range this.routes {
 			routeData := v.GetRouteData(requestPath)

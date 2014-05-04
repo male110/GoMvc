@@ -29,6 +29,13 @@ type SessionBase struct {
 }
 
 func (this *SessionBase) StartSession(w http.ResponseWriter, r *http.Request, location string) (map[string]interface{}, error) {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			err := e.(error)
+			AppLog.Add("In Session.StartSession:\t" + err.Error())
+		}
+	}()
 	sid := this.getSessionId(r)
 	if sid == "" {
 		//cookie不存在，产生一个新的Session

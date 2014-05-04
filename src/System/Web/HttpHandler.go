@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
+	"runtime/debug"
 	"strings"
 )
 
@@ -18,8 +19,9 @@ func (this *HttpHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	defer func() {
 		//错误处理
 		if e := recover(); e != nil {
+			fmt.Println(e)
 			err := e.(error)
-			App.Log.Add("URL:" + r.URL.String() + "\t" + fmt.Sprintf("%v", err.Error()))
+			App.Log.Add("URL:" + r.URL.String() + "\t" + fmt.Sprintf("%v", err) + "\r\n" + string(debug.Stack()))
 			if App.Configs.ShowErrors {
 				this.Show505(rw, err)
 			}
@@ -121,6 +123,14 @@ func (this *HttpHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 
 //初始化Controller
 func (this *HttpHandler) initController(ictl IController, rw http.ResponseWriter, r *http.Request, session map[string]interface{}, routData map[string]interface{}, cookies map[string]string, binder *Binder) {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			fmt.Println(e)
+			err := e.(error)
+			App.Log.Add("in HttpHandler initController URL:" + r.URL.String() + "\t" + fmt.Sprintf("%v", err))
+		}
+	}()
 	ictl.SetResponse(rw)
 	ictl.SetRequest(r)
 	ictl.SetRouteData(routData)
@@ -128,6 +138,7 @@ func (this *HttpHandler) initController(ictl IController, rw http.ResponseWriter
 	viewData["Request"] = r
 	viewData["Controller"] = routData["controller"]
 	viewData["Action"] = routData["action"]
+
 	ictl.SetViewData(viewData)
 	ictl.SetSession(session)
 	ictl.SetTheme(App.Configs.Theme)
@@ -140,6 +151,14 @@ func (this *HttpHandler) initController(ictl IController, rw http.ResponseWriter
 
 /*调用OnLoad函数,如果存在*/
 func (this *HttpHandler) CallOnLoad(ctl reflect.Value) {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			fmt.Println(e)
+			err := e.(error)
+			App.Log.Add("in HttpHandler CallOnLoad\t" + fmt.Sprintf("%v", err))
+		}
+	}()
 	onload := ctl.MethodByName("OnLoad")
 	if !onload.IsValid() {
 		//不存在直接返回true
@@ -154,6 +173,14 @@ func (this *HttpHandler) CallOnLoad(ctl reflect.Value) {
 
 /*调用UnLoad函数*/
 func (this *HttpHandler) CallUnLoad(ctl reflect.Value) {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			fmt.Println(e)
+			err := e.(error)
+			App.Log.Add("in HttpHandler CallUnLoad \t" + fmt.Sprintf("%v", err))
+		}
+	}()
 	unload := ctl.MethodByName("UnLoad")
 	if !unload.IsValid() {
 		//不存在直接返回true
@@ -168,6 +195,14 @@ func (this *HttpHandler) CallUnLoad(ctl reflect.Value) {
 
 /*获取函数的参数*/
 func (this *HttpHandler) GetMethodParam(methodType reflect.Type, binder *Binder) []reflect.Value {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			err := e.(error)
+			App.Log.Add("in HttpHandler.GetMethodParam \t" + fmt.Sprintf("%v", err))
+
+		}
+	}()
 	var param []reflect.Value
 	if methodType.NumIn() > 0 {
 		for i, j := 0, methodType.NumIn(); i < j; i++ {
@@ -188,6 +223,13 @@ func (this *HttpHandler) GetMethodParam(methodType reflect.Type, binder *Binder)
 	return param
 }
 func (this *HttpHandler) ProcessStatic(requestPath string, w http.ResponseWriter, r *http.Request) bool {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			err := e.(error)
+			App.Log.Add("In HttpHandler.ProcessStatic:\t" + fmt.Sprintf("%v", err))
+		}
+	}()
 	//转换为小写，不区分大小写的比较
 	strLowerPath := strings.ToLower(requestPath)
 	//判断是否静态文件
@@ -215,6 +257,13 @@ func (this *HttpHandler) ProcessStatic(requestPath string, w http.ResponseWriter
 	return false
 }
 func (this *HttpHandler) GetCookie(r *http.Request) map[string]string {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			err := e.(error)
+			App.Log.Add("In HttpHandler.GetCookie URL:" + r.URL.String() + "\t" + fmt.Sprintf("%v", err))
+		}
+	}()
 	m := make(map[string]string)
 	for _, v := range r.Cookies() {
 		m[v.Name], _ = url.QueryUnescape(v.Value)
@@ -222,6 +271,14 @@ func (this *HttpHandler) GetCookie(r *http.Request) map[string]string {
 	return m
 }
 func (this *HttpHandler) GetForms(r *http.Request) map[string]string {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			fmt.Println(e)
+			err := e.(error)
+			App.Log.Add("in HttpHandler GetForms URL:" + r.URL.String() + "\t" + fmt.Sprintf("%v", err))
+		}
+	}()
 	m := make(map[string]string)
 	for k, v := range r.PostForm {
 		m[k] = v[len(v)-1]
@@ -229,6 +286,14 @@ func (this *HttpHandler) GetForms(r *http.Request) map[string]string {
 	return m
 }
 func (this *HttpHandler) GetQueryString(r *http.Request) map[string]string {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			fmt.Println(e)
+			err := e.(error)
+			App.Log.Add("in HttpHandler GetQueryString URL:" + r.URL.String() + "\t" + fmt.Sprintf("%v", err))
+		}
+	}()
 	m := make(map[string]string)
 	querys := r.URL.Query()
 	for k, v := range querys {
@@ -239,6 +304,14 @@ func (this *HttpHandler) GetQueryString(r *http.Request) map[string]string {
 
 //请求结束时，保存Session,设置cookies
 func (this *HttpHandler) EndRequest(sessions map[string]interface{}, cookies map[string]string, rw http.ResponseWriter, r *http.Request) {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			fmt.Println(e)
+			err := e.(error)
+			App.Log.Add("in HttpHandler EndRequest URL:" + r.URL.String() + "\t" + fmt.Sprintf("%v", err))
+		}
+	}()
 	App.SessionProvider.EndSession(sessions, App.Configs.SessionLocation, r)
 	for k, v := range cookies {
 		v = url.QueryEscape(v)
@@ -257,6 +330,14 @@ func (this *HttpHandler) EndRequest(sessions map[string]interface{}, cookies map
 
 //显示404页面
 func (this *HttpHandler) Show404(w http.ResponseWriter, strArea string) {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			fmt.Println(e)
+			err := e.(error)
+			App.Log.Add("in HttpHandler Show404\t" + fmt.Sprintf("%v", err))
+		}
+	}()
 	viewData := make(map[string]interface{})
 	viewData["area"] = strArea
 	result := ViewResult{
@@ -277,6 +358,14 @@ func (this *HttpHandler) Show404(w http.ResponseWriter, strArea string) {
 
 //显示错误信息
 func (this *HttpHandler) Show505(w http.ResponseWriter, err error) {
+	/*defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			fmt.Println(e)
+			err := e.(error)
+			App.Log.Add("in HttpHandler Show505 \t" + fmt.Sprintf("%v", err))
+		}
+	}()*/
 	viewData := make(map[string]interface{})
 	errMsg := fmt.Sprintf("%v", err)
 	viewData["ErrMsg"] = errMsg

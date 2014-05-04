@@ -47,6 +47,14 @@ func NewBinder(request *http.Request, routeData map[string]interface{}) *Binder 
 	return binder
 }
 func (this *Binder) BindModel(data interface{}) error {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			err := e.(error)
+			App.Log.Add("in Binder.BindModel:" + "\t" + fmt.Sprintf("%v", err.Error()))
+
+		}
+	}()
 	var rv reflect.Value
 	var rt reflect.Type
 	//传进来的值，有可能是用reflect.New创建的

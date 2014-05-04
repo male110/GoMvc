@@ -157,20 +157,27 @@ func RanderAction(controller, action, param string, r *http.Request) HTML {
 	}
 	strCookies := GetCookies(r)
 	strUrl = GetUrl(r) + strUrl
-	return Get(strUrl, strCookies)
+	return Get(strUrl, r.Host, strCookies)
 }
-func Get(url, cookies string) HTML {
+func Get(url, host, cookies string) HTML {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return HTML(err.Error())
 	}
 	req.Header.Add("Cookie", cookies)
+	req.Header.Add("Accept", "*/*")
+	req.Header.Add("Accept-Encoding", "gzip, deflate")
+	req.Header.Add("Accept-Language", "zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3")
+	req.Header.Add("Connection", "keep-alive")
+	req.Header.Add("User-Agent", "	Mozilla/5.0 (Windows NT 5.1; rv:28.0) Gecko/20100101 Firefox/28.0")
+	req.Header.Add("Host", host)
+
 	response, err := client.Do(req)
 	if err != nil {
 		return HTML(err.Error())
 	}
-	if response.StatusCode != 200 {
+	if response.StatusCode != 200 && err != nil {
 		return HTML(err.Error())
 	}
 	buf, err := ioutil.ReadAll(response.Body)

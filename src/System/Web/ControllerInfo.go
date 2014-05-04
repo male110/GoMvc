@@ -107,6 +107,13 @@ func (this *ControllersCollection) getTypeNameAndType(t reflect.Type) (string, r
 }
 
 func (this *ControllersCollection) GetController(routeData map[string]interface{}) (reflect.Value, error) {
+	defer func() {
+		//错误处理
+		if e := recover(); e != nil {
+			err := e.(error)
+			App.Log.Add("In ControllerInfo.GetController:\t" + fmt.Sprintf("%v", err.Error()))
+		}
+	}()
 	var result reflect.Value
 	controllerName := strings.ToLower(fmt.Sprintf("%v", routeData["controller"]))
 	actionName := strings.ToLower(fmt.Sprintf("%v", routeData["action"]))
