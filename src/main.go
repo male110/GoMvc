@@ -7,8 +7,8 @@ import (
 	. "System/Routing"
 	. "System/Web"
 	"fmt"
-
 	"runtime"
+	"runtime/debug"
 )
 
 //当前配置文件的端口为6080,输入http://localhost:6080/可查看运行结果
@@ -34,7 +34,7 @@ func main() {
 	defer func() {
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add(fmt.Sprintf("%v", err.Error()))
+			App.Log.Add(err.Error() + "\r\n" + string(debug.Stack()))
 			fmt.Println(err)
 		}
 	}()
