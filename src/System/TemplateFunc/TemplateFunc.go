@@ -1,6 +1,7 @@
 package TemplateFunc
 
 import (
+	"System/Log"
 	"fmt"
 	. "html/template"
 	"io/ioutil"
@@ -177,8 +178,13 @@ func Get(url, host, cookies string) HTML {
 	if err != nil {
 		return HTML(err.Error())
 	}
-	if response.StatusCode != 200 && err != nil {
-		return HTML(err.Error())
+	if response.StatusCode != 200 {
+		if err != nil {
+			return HTML(err.Error())
+		} else {
+			Log.AppLog.Add("In RenderAction URL:" + url + "\r\nHost:" + host + "\r\nStatusCode:" + strconv.Itoa(response.StatusCode))
+		}
+
 	}
 	buf, err := ioutil.ReadAll(response.Body)
 	response.Body.Close()
@@ -198,7 +204,8 @@ func GetCookies(r *http.Request) string {
 	return strCookie
 }
 func GetUrl(r *http.Request) string {
-	strRefer := strings.ToLower(r.Referer())
+	strRefer := strings.ToLower(r.URL.String())
+
 	strUrl := ""
 	if strings.Index(strRefer, "https://") == -1 {
 		strUrl = "http://"
