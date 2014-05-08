@@ -1,4 +1,4 @@
-{{template "header" .}}
+{{RenderView "header_for_RenderView" .}}
 <div class="heading">
   <div class="wrapper">
   	<h1>欢迎使用GoMVC</h1>

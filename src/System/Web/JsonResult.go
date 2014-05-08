@@ -23,6 +23,7 @@ func (this *JsonResult) ExecuteResult() error {
 		delete(viewData, "Action")
 		delete(viewData, "Controller")
 		delete(viewData, "Request")
+		delete(viewData, "Theme")
 	}
 
 	if this.JsonText == "" {

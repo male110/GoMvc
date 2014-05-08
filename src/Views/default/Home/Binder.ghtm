@@ -17,13 +17,13 @@ type User struct {
             用户名： 
         &lt;/td&gt;
         &lt;td&gt;
-            &lt;input id="UserName0" name="UserName0" type="text" /&gt;&lt;/td&gt;
+            &lt;input id="UserName" name="UserName" type="text" /&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;
             用户名：&lt;/td&gt;
         &lt;td&gt;
-            &lt;input id="Password0" name="Password0" type="password" /&gt;&lt;/td&gt;
+            &lt;input id="Password" name="Password" type="password" /&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;

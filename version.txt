@@ -1,0 +1,12 @@
+当前版本：1.0
+最后更新日期：2014-05-08
+
+
+更新日志
+2014-05-08　　  加入模板函数RenderView，更新文档；将System\TemplateFunc包跟System\ViewEngine合并成一个包。
+2014-05-07　　　修改RanderAction模板函数的一处错误。<br>
+2014-05-05　　　修改RanderAction模板函数的Bug，所有错误日志记录堆栈信息，以便调试，处理错误。
+        　　　　增加编译的批处理文件Windows下运行build.bat,Linux下运行build.sh
+2014-01-24　　　程序意外退出时，记录错误日志。
+2013-10-14　　　增加域的功能。
+2013-10-12　　　修复路由和FieSession的Bug。

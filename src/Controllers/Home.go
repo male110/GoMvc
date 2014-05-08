@@ -71,3 +71,6 @@ func (this *Home) TestXml() *Web.XmlResult {
 	u := User{"张三", 19}
 	return this.Xml(u, "utf-8")
 }
+func (this *Home) Action() *Web.ViewResult {
+	return this.View()
+}

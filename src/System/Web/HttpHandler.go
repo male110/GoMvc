@@ -138,6 +138,8 @@ func (this *HttpHandler) initController(ictl IController, rw http.ResponseWriter
 	viewData["Request"] = r
 	viewData["Controller"] = routData["controller"]
 	viewData["Action"] = routData["action"]
+	viewData["Theme"] = App.Configs.Theme
+	viewData["Area"] = routData["area"]
 
 	ictl.SetViewData(viewData)
 	ictl.SetSession(session)

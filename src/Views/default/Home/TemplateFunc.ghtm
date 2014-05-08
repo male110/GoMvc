@@ -1,80 +1,101 @@
 {{template "header" .}}
-<h1 class="phead">模板函数</h1>
+<h1 class="phead">
+    模板函数</h1>
 Go中默认提供了and,not,len等函,但还不够用，所以在System/TemplateFunc中又自定义了一些模板函数。
 <ul>
-<li>RanderAction：在当前位置嵌入另一个页面。该函数定义如下：
-<pre>
+    <li>RanderAction：在当前位置嵌入另一个页面。该函数定义如下：
+        <pre>
 func RanderAction(controller, action, param string, r *http.Request) HTML {
 	...
 }
 </pre>
-param参数为URL地址栏中的参数，如"a=1&b=2",r 为http.Request。在模板中的的调用方法如下：
-<pre>
+        param参数为URL地址栏中的参数，如"a=1&b=2",r 为http.Request。在模板中的的调用方法如下：
+        <pre>
 { { RanderAction "home" "footer" "" .Request } }
 </pre>
-在ViewData中预设了Request的值为当前请求对像。
-</li>
-<li>Equal：判断两个对像是否相等，定义如下：
-<pre>
+        在ViewData中预设了Request的值为当前请求对像。 </li>
+    <li>RenderView：在当前置嵌入另一个模板。访函数字义如下：
+    <pre>
+        func RenderView(strViewName string, viewData map[string]interface{}) HTML {
+        ...
+        }
+        </pre>
+    应用示例：
+    <pre>
+        { { RenderView "header_for_RenderView" . } }
+        </pre>
+    <p>
+        RendView与RendAction的区别在于，RendView直接把指定的模板文件在当前位置展示。而RendAction要经过Controller=&gt;Action最后把返回结果展示在当前位置，相当于一个独立的Http请求。RenderView不经过Controller直接把视图文件展示出来。</p>
+    </li>
+    <li>Equal：判断两个对像是否相等，定义如下：
+        <pre>
 func Equal(a, b interface{}) bool {
 	...
 	}
 </pre>
-a,b必须是同一种类型
-</li>
-<li>Greater: 判断第一个参数值是否大于第二个参数值，定义如下：
-<pre>
+        a,b必须是同一种类型 </li>
+    <li>Greater: 判断第一个参数值是否大于第二个参数值，定义如下：
+        <pre>
 func Greater(a, b interface{}) bool {
 	...
 	}
 </pre>
-a,b必须是同一种类型,且必须是其本类型int,float,string。
-</li>
-<li>GreaterOrEqual: 判断第一个参数值是否大于等于第二个参数值，定义如下：
-<pre>
+        a,b必须是同一种类型,且必须是其本类型int,float,string。 </li>
+    <li>GreaterOrEqual: 判断第一个参数值是否大于等于第二个参数值，定义如下：
+        <pre>
 func GreaterOrEqual(a, b interface{}) bool {
 	...
 	}
 </pre>
-a,b必须是同一种类型,且必须是其本类型int,float,string。
-</li>
-<li>Less: 判断第一个参数值是否小于第二个参数值，定义如下：
-<pre>
+        a,b必须是同一种类型,且必须是其本类型int,float,string。 </li>
+    <li>Less: 判断第一个参数值是否小于第二个参数值，定义如下：
+        <pre>
 func Less(a, b interface{}) bool {
 	...
 	}
 </pre>
-a,b必须是同一种类型,且必须是其本类型int,float,string。
-</li>
-<li>LessOrEqual: 判断第一个参数值是否小于等于第二个参数值，定义如下：
-<pre>
+        a,b必须是同一种类型,且必须是其本类型int,float,string。 </li>
+    <li>LessOrEqual: 判断第一个参数值是否小于等于第二个参数值，定义如下：
+        <pre>
 func LessOrEqual(a, b interface{}) bool {
 	...
 	}
 </pre>
-a,b必须是同一种类型,且必须是其本类型int,float,string。
-</li>
-<li>SubString: 字符串截取，定义如下：
-<pre>
+        a,b必须是同一种类型,且必须是其本类型int,float,string。 </li>
+    <li>SubString: 字符串截取，定义如下：
+        <pre>
 func SubString(str string, start, length int) string {
 	...
 	}
 </pre>
-str是要截取的字符串，start是开始位置，0是第一个字符处开始，length是要截取的字符串的长度。
-</li>
-<li>Trim: 删除字符串两端指定的字符，定义如下：
-<pre>
+        str是要截取的字符串，start是开始位置，0是第一个字符处开始，length是要截取的字符串的长度。 </li>
+    <li>Trim: 删除字符串两端指定的字符，定义如下：
+        <pre>
 func Trim(str, cutset string) string {
 	return strings.Trim(str, cutset)
 }
 </pre>
-</li>
-<li>TrimSpace: 删除字符串两端的空格，定义如下：
-<pre>
+    </li>
+    <li>TrimSpace: 删除字符串两端的空格，定义如下：
+        <pre>
 func TrimSpace(str string) string {
 	return strings.TrimSpace(str)
 }
 </pre>
-</li>
+    </li>
+    <li>Mod ：对x/y取余，定义如下：
+        <pre>
+func Mod(x, y float64) float64 {
+...
+}
+</pre>
+    </li>
+    <li>IsOddNumber ：判断指定的数字是否为奇数，是返回true，不是返回false，定义如下
+        <pre>
+func IsOddNumber(x int) bool {
+...
+}
+</pre>
+    </li>
 </ul>
 {{RanderAction "home" "footer" "" .Request}}
