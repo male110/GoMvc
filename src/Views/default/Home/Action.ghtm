@@ -40,7 +40,7 @@ func (this *Home) TestJson() *Web.JsonResult {
 	return this.Json(this.ViewData, "utf-8")
 }
 </pre>
-第一个参数可以是JSON字符串，struct或map对象，第二个参数是字符编码，可省略，默认为utf-8。当第一个参数为map[string]interface{}类型时，map的key中不能包含Action，Controller，Request键值，这些在展示时会被屏蔽掉。
+第一个参数可以是JSON字符串，struct或map对象，第二个参数是字符编码，可省略，默认为utf-8。当第一个参数为map[string]interface{}类型时，map的key中不能包含Action,Controller,Request,Theme,Area键值，这些在展示时会被屏蔽掉。
 主要是因为ViewData中，默认会有Action,Controller,Request,Theme,Area几个值，如果不屏蔽这几个值，this.Json(this.ViewData, "utf-8")得到的将不是我们想要的结果。
 </li>
 <li>
