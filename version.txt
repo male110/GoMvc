@@ -3,6 +3,7 @@
 
 
 更新日志
+2014-05-12　　  Controller加入Redirect函数，修改RederAction。
 2014-05-08　　  加入模板函数RenderView，更新文档；将System\TemplateFunc包跟System\ViewEngine合并成一个包。
 2014-05-07　　　修改RanderAction模板函数的一处错误。<br>
 2014-05-05　　　修改RanderAction模板函数的Bug，所有错误日志记录堆栈信息，以便调试，处理错误。

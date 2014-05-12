@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"math"
 	"net/http"
+	"runtime/debug"
 	"strconv"
 	"strings"
 )
@@ -162,9 +163,9 @@ func RanderAction(controller, action, param string, r *http.Request) HTML {
 	}
 	strCookies := GetCookies(r)
 	strUrl = GetUrl(r) + strUrl
-	return Get(strUrl, r.Host, strCookies)
+	return Get(strUrl, "localhost", strCookies, r)
 }
-func Get(url, host, cookies string) HTML {
+func Get(url, host, cookies string, r *http.Request) HTML {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -186,7 +187,9 @@ func Get(url, host, cookies string) HTML {
 		if err != nil {
 			return HTML(err.Error())
 		} else {
-			Log.AppLog.Add("In RenderAction URL:" + url + "\r\nHost:" + host + "\r\nStatusCode:" + strconv.Itoa(response.StatusCode))
+			Log.AppLog.Add("xxxxx RenderAction URL:" + url + "\r\nHost:" + host + "\r\nStatusCode:" + strconv.Itoa(response.StatusCode))
+			Log.AppLog.Add("In RenderAction request.URL:" + r.URL.String() + "\r\nReferer:" + r.Referer())
+			Log.AppLog.Add(string(debug.Stack()))
 		}
 
 	}
@@ -216,9 +219,18 @@ func GetUrl(r *http.Request) string {
 	} else {
 		strUrl = "https://"
 	}
-	strUrl = strUrl + r.Host
+	strUrl = strUrl + "localhost" + GetPort(r.Host)
 	strUrl = strings.Trim(strUrl, "/")
 	return strUrl
+}
+
+func GetPort(url string) string {
+	index := strings.Index(url, ":")
+	if index == -1 {
+		return ""
+	}
+	arrByte := []byte(url)
+	return string(arrByte[index:])
 }
 
 //在模板中嵌入另一个模板文件

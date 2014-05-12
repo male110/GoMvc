@@ -2,7 +2,7 @@
 <p>
   <b>当前版本：1.0</b>
   <br/>
-  <b>最后更新日期：2014-05-08</b>
+  <b>最后更新日期：2014-05-12</b>
 </p>
 <a href="http://www.668.cm/" target="_blank">官网</a><br/>
 <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
@@ -18,13 +18,14 @@
     <a name="updatelog">更新日志</a>
   </b>
   <pre>
-    <b>2014-05-08</b>　　　加入模板函数RenderView，更新文档；将System\TemplateFunc包跟System\ViewEngine合并成一个包。<br>
-     2014-05-07　　　修改RanderAction模板函数的一处错误。<br>
-      2014-05-05　　　修改RanderAction模板函数的Bug，所有错误日志记录堆栈信息，以便调试，处理错误。<br>
+    <b>2014-05-12</b>　　  Controller加入Redirect函数，修改RederAction。
+    2014-05-08　　　加入模板函数RenderView，更新文档；将System\TemplateFunc包跟System\ViewEngine合并成一个包。<br>
+    2014-05-07　　　修改RanderAction模板函数的一处错误。<br>
+    2014-05-05　　　修改RanderAction模板函数的Bug，所有错误日志记录堆栈信息，以便调试，处理错误。<br>
         　　　　　　　　增加编译的批处理文件Windows下运行build.bat,Linux下运行build.sh<br/>
-        2014-01-24　　　程序意外退出时，记录错误日志。<br/>
-        2013-10-14　　　增加域的功能。<br/>
-        2013-10-12　　　修复路由和FieSession的Bug。
+    2014-01-24　　　程序意外退出时，记录错误日志。<br/>
+    2013-10-14　　　增加域的功能。<br/>
+    2013-10-12　　　修复路由和FieSession的Bug。
       </pre>
 </p>
 <p>

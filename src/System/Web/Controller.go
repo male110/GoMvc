@@ -148,3 +148,8 @@ func (this *Controller) View(args ...string) *ViewResult {
 	}
 	return result
 }
+
+func (this *Controller) Redirect(strUrl string) {
+	http.Redirect(this.Response, this.Request, strUrl, http.StatusFound)
+	this.ResponseEnd()
+}
