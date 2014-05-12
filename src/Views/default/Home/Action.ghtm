@@ -58,5 +58,16 @@ func (this *Home) TestXml() *Web.XmlResult {
 </pre>
 第一个参数可以是XML字符串或struct结构体，但不能是map对象。第二个参数是字符编码，可省略，默认为utf-8。
 </li>
+<li><b>页面跳转:</b>Controller里有实现一个Redirect函数，在Action中可以调用这个函数实现页面跳转。
+<pre>
+func (this *Home) OnLoad() {
+	_, ok := this.Session["UserName"]
+	strActionName := this.RouteData["action"]
+	if !ok && strActionName != "Login" {
+		<b>this.Redirect("/Admin/Home/Login")</b>
+	}
+}
+</pre>
+</li>
 </ul>  
 {{RanderAction "home" "footer" "" .Request}}
