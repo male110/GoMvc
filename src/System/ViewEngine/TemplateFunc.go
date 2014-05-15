@@ -1,6 +1,7 @@
 package ViewEngine
 
 import (
+	"System/Config"
 	"System/Log"
 	"bytes"
 	"fmt"
@@ -8,7 +9,6 @@ import (
 	"io/ioutil"
 	"math"
 	"net/http"
-	"runtime/debug"
 	"strconv"
 	"strings"
 )
@@ -187,9 +187,8 @@ func Get(url, host, cookies string, r *http.Request) HTML {
 		if err != nil {
 			return HTML(err.Error())
 		} else {
-			Log.AppLog.Add("xxxxx RenderAction URL:" + url + "\r\nHost:" + host + "\r\nStatusCode:" + strconv.Itoa(response.StatusCode))
+			Log.AppLog.Add("RenderAction URL:" + url + "\r\nHost:" + host + "\r\nStatusCode:" + strconv.Itoa(response.StatusCode))
 			Log.AppLog.Add("In RenderAction request.URL:" + r.URL.String() + "\r\nReferer:" + r.Referer())
-			Log.AppLog.Add(string(debug.Stack()))
 		}
 
 	}
@@ -219,18 +218,13 @@ func GetUrl(r *http.Request) string {
 	} else {
 		strUrl = "https://"
 	}
-	strUrl = strUrl + "localhost" + GetPort(r.Host)
+	strUrl = strUrl + "localhost"
+	if Config.AppConfig.ListenPort != 80 {
+		strUrl = strUrl + ":" + strconv.Itoa(Config.AppConfig.ListenPort)
+	}
+
 	strUrl = strings.Trim(strUrl, "/")
 	return strUrl
-}
-
-func GetPort(url string) string {
-	index := strings.Index(url, ":")
-	if index == -1 {
-		return ""
-	}
-	arrByte := []byte(url)
-	return string(arrByte[index:])
 }
 
 //在模板中嵌入另一个模板文件
