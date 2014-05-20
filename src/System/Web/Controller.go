@@ -20,6 +20,7 @@ type IController interface {
 	SetBinder(binder *Binder)
 	SetQueryString(map[string]string)
 	SetForm(map[string]string)
+	SetIsPost(bool)
 }
 type Controller struct {
 	Request       *http.Request
@@ -34,6 +35,7 @@ type Controller struct {
 	Theme         string //主题名称
 	Cookies       map[string]string
 	DefaultBinder *Binder
+	IsPost        bool //如果是Post提交的数据为true,否则为false
 }
 
 func (this *Controller) SetResponse(rw http.ResponseWriter) {
@@ -77,6 +79,9 @@ func (this *Controller) ResponseEnd() {
 }
 func (this *Controller) UpdateModel(data interface{}) error {
 	return this.DefaultBinder.BindModel(data)
+}
+func (this *Controller) SetIsPost(isPost bool) {
+	this.IsPost = isPost
 }
 
 /*该函数接受两个参数，第一个是要输出的javascript脚本内容,第二个参数是字符集，可变参数，可以省略不传，默认是utf-8编码*/
@@ -152,4 +157,7 @@ func (this *Controller) View(args ...string) *ViewResult {
 func (this *Controller) Redirect(strUrl string) {
 	http.Redirect(this.Response, this.Request, strUrl, http.StatusFound)
 	this.ResponseEnd()
+}
+func (this *Controller) BindModel(model interface{}) error {
+	return this.DefaultBinder.BindModel(model)
 }

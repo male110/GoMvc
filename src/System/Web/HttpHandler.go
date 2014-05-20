@@ -149,6 +149,11 @@ func (this *HttpHandler) initController(ictl IController, rw http.ResponseWriter
 	ictl.SetBinder(binder)
 	ictl.SetQueryString(this.GetQueryString(r))
 	ictl.SetForm(this.GetForms(r))
+	if r.Method == "POST" {
+		ictl.SetIsPost(true)
+	} else {
+		ictl.SetIsPost(false)
+	}
 }
 
 /*调用OnLoad函数,如果存在*/
