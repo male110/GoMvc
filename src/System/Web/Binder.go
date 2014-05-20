@@ -51,9 +51,10 @@ func (this *Binder) BindModel(data interface{}) error {
 	defer func() {
 		//错误处理
 		if e := recover(); e != nil {
-			err := e.(error)
-			App.Log.Add("in Binder.BindModel:" + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
 
+			err := e.(error)
+
+			App.Log.Add("in Binder.BindModel:" + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
 		}
 	}()
 	var rv reflect.Value
@@ -78,8 +79,12 @@ func (this *Binder) BindModel(data interface{}) error {
 	}
 	numField := rt.NumField()
 	for i := 0; i < numField; i++ {
+
 		ft := rt.Field(i)
 		fv := rv.Field(i)
+		if ft.Tag == "-" {
+			continue
+		}
 		value := fv.Interface()
 		if fv.Kind() == reflect.Struct {
 			//如果字段是一个结构体，不做处理
@@ -88,41 +93,55 @@ func (this *Binder) BindModel(data interface{}) error {
 			rfvaleType := reflect.TypeOf(value)
 			//取字段名对应的值，顺序是Post,query,route
 			paramValue := this.getValue(ft.Name)
+
 			//针对不同的类型进行类型转换
 			switch value.(type) {
 			case string:
-				strValue := this.asString(paramValue)
-				fv.SetString(strValue)
+				if paramValue != nil {
+					strValue := this.asString(paramValue)
+					fv.SetString(strValue)
+				}
 			case int, int8, int16, int32, int64:
-				strValue := this.asString(paramValue)
-				intValue, err := strconv.ParseInt(strValue, 10, rfvaleType.Bits())
-				if err != nil {
-					return nil
+				if paramValue != nil {
+					strValue := this.asString(paramValue)
+					intValue, err := strconv.ParseInt(strValue, 10, rfvaleType.Bits())
+					if err != nil {
+						return err
+					}
+					fv.SetInt(intValue)
 				}
-				fv.SetInt(intValue)
 			case uint, uint8, uint16, uint32, uint64:
-				strValue := this.asString(paramValue)
-				uintValue, err := strconv.ParseUint(strValue, 10, rfvaleType.Bits())
-				if err != nil {
-					return nil
+				if paramValue != nil {
+					strValue := this.asString(paramValue)
+					fv.SetUint(0)
+					uintValue, err := strconv.ParseUint(strValue, 10, rfvaleType.Bits())
+					if err != nil {
+						return err
+					}
+					fv.SetUint(uintValue)
 				}
-				fv.SetUint(uintValue)
 			case float32, float64:
-				strValue := this.asString(paramValue)
-				floatValue, err := strconv.ParseFloat(strValue, rfvaleType.Bits())
-				if err != nil {
-					return nil
+				if paramValue != nil {
+					strValue := this.asString(paramValue)
+					floatValue, err := strconv.ParseFloat(strValue, rfvaleType.Bits())
+					if err != nil {
+						return err
+					}
+					fv.SetFloat(floatValue)
 				}
-				fv.SetFloat(floatValue)
 			case bool:
-				strValue := this.asString(paramValue)
-				boolValue, err := strconv.ParseBool(strValue)
-				if err != nil {
-					return nil
+				if paramValue != nil {
+					strValue := this.asString(paramValue)
+					boolValue, err := strconv.ParseBool(strValue)
+					if err != nil {
+						return err
+					}
+					fv.SetBool(boolValue)
 				}
-				fv.SetBool(boolValue)
 			case interface{}:
-				fv.Set(reflect.ValueOf(paramValue))
+				if paramValue != nil {
+					fv.Set(reflect.ValueOf(paramValue))
+				}
 			}
 		}
 	}

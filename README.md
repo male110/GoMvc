@@ -17,7 +17,7 @@
     <a name="updatelog">更新日志</a>
   </b>
   <pre>
-    <b>2014-05-12</b>　　 修改Controller的IsPost属性。
+    <b>2014-05-12</b>　　 修改Controller的IsPost属性,修改Binder的错误。
     2014-05-12　　 修改RederAction。
     2014-05-12　　  Controller加入Redirect函数，修改RederAction。
     2014-05-08　　　加入模板函数RenderView，更新文档；将System\TemplateFunc包跟System\ViewEngine合并成一个包。<br>

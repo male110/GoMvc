@@ -19,7 +19,6 @@ func (this *HttpHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	defer func() {
 		//错误处理
 		if e := recover(); e != nil {
-			fmt.Println(e)
 			err := e.(error)
 			App.Log.Add("URL:" + r.URL.String() + "\t" + fmt.Sprintf("%v", err) + "\r\n" + string(debug.Stack()))
 			if App.Configs.ShowErrors {
@@ -126,7 +125,7 @@ func (this *HttpHandler) initController(ictl IController, rw http.ResponseWriter
 	defer func() {
 		//错误处理
 		if e := recover(); e != nil {
-			fmt.Println(e)
+
 			err := e.(error)
 			App.Log.Add("in HttpHandler initController URL:" + r.URL.String() + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
 		}
@@ -161,7 +160,6 @@ func (this *HttpHandler) CallOnLoad(ctl reflect.Value) {
 	defer func() {
 		//错误处理
 		if e := recover(); e != nil {
-			fmt.Println(e)
 			err := e.(error)
 			App.Log.Add("in HttpHandler CallOnLoad\t" + err.Error() + "\r\n" + string(debug.Stack()))
 		}
@@ -183,7 +181,6 @@ func (this *HttpHandler) CallUnLoad(ctl reflect.Value) {
 	defer func() {
 		//错误处理
 		if e := recover(); e != nil {
-			fmt.Println(e)
 			err := e.(error)
 			App.Log.Add("in HttpHandler CallUnLoad \t" + err.Error() + "\r\n" + string(debug.Stack()))
 		}
@@ -281,7 +278,6 @@ func (this *HttpHandler) GetForms(r *http.Request) map[string]string {
 	defer func() {
 		//错误处理
 		if e := recover(); e != nil {
-			fmt.Println(e)
 			err := e.(error)
 			App.Log.Add("in HttpHandler GetForms URL:" + r.URL.String() + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
 		}
@@ -296,7 +292,6 @@ func (this *HttpHandler) GetQueryString(r *http.Request) map[string]string {
 	defer func() {
 		//错误处理
 		if e := recover(); e != nil {
-			fmt.Println(e)
 			err := e.(error)
 			App.Log.Add("in HttpHandler GetQueryString URL:" + r.URL.String() + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
 		}
@@ -314,7 +309,6 @@ func (this *HttpHandler) EndRequest(sessions map[string]interface{}, cookies map
 	defer func() {
 		//错误处理
 		if e := recover(); e != nil {
-			fmt.Println(e)
 			err := e.(error)
 			App.Log.Add("in HttpHandler EndRequest URL:" + r.URL.String() + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
 		}
@@ -340,7 +334,6 @@ func (this *HttpHandler) Show404(w http.ResponseWriter, strArea string) {
 	defer func() {
 		//错误处理
 		if e := recover(); e != nil {
-			fmt.Println(e)
 			err := e.(error)
 			App.Log.Add("in HttpHandler Show404\t" + err.Error() + "\r\n" + string(debug.Stack()))
 		}

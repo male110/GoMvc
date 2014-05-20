@@ -33,7 +33,6 @@ func init() {
 //等于
 func Equal(a, b interface{}) bool {
 	result := a == b
-	//fmt.Println(a, "\t", b, "\t", result)
 	return result
 }
 
