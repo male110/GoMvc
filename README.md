@@ -1,7 +1,7 @@
 <p>
-  <b>当前版本：1.02</b>
+  <b>当前版本：1.03</b>
   <br/>
-  <b>最后更新日期：2014-05-15</b>
+  <b>最后更新日期：2014-05-20</b>
 </p>
 <a href="http://www.668.cm/" target="_blank">官网</a><br/>
 <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
@@ -17,8 +17,9 @@
     <a name="updatelog">更新日志</a>
   </b>
   <pre>
-    <b>2014-05-12</b>　　 修改RederAction。
-    <b>2014-05-12</b>　　  Controller加入Redirect函数，修改RederAction。
+    <b>2014-05-12</b>　　 修改Controller的IsPost属性。
+    2014-05-12　　 修改RederAction。
+    2014-05-12　　  Controller加入Redirect函数，修改RederAction。
     2014-05-08　　　加入模板函数RenderView，更新文档；将System\TemplateFunc包跟System\ViewEngine合并成一个包。<br>
     2014-05-07　　　修改RanderAction模板函数的一处错误。<br>
     2014-05-05　　　修改RanderAction模板函数的Bug，所有错误日志记录堆栈信息，以便调试，处理错误。<br>
