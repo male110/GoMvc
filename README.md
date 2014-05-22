@@ -17,9 +17,12 @@
     <a name="updatelog">更新日志</a>
   </b>
   <pre>
-    <b>2014-05-12</b>　　 修改Controller的IsPost属性,修改Binder的错误。
-    2014-05-12　　 修改RederAction。
-    2014-05-12　　  Controller加入Redirect函数，修改RederAction。
+    <b>2014-05-22</b>　　 修改Http请求处理过程，支持这样的Action
+    　　　　　　　　func (this *Controller) IsExist() string {
+    　　　　　　　　}
+    　　　　　　　　action可以直接返回一个string类型，如果是其它的非ViewResult类型，会转换成string并输出。
+    2014-05-20　　  修改Controller的IsPost属性,修改Binder的错误。
+    2014-05-12　　  Controller加入Redirect函数，修改RederAction,修改RederAction。。
     2014-05-08　　　加入模板函数RenderView，更新文档；将System\TemplateFunc包跟System\ViewEngine合并成一个包。<br>
     2014-05-07　　　修改RanderAction模板函数的一处错误。<br>
     2014-05-05　　　修改RanderAction模板函数的Bug，所有错误日志记录堆栈信息，以便调试，处理错误。<br>
