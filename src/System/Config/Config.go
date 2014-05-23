@@ -160,6 +160,10 @@ func processXmlTocken(c *Config, xmlName, data string) {
 	case "Dir":
 		c.StaticDir = append(c.StaticDir, changePathSeparator(data))
 	case "SessionType":
+		if strings.TrimSpace(data) == "" || data == "0" {
+			c.SessionType = 0
+			return
+		}
 		stype, err := strconv.Atoi(data)
 		if err != nil {
 			AppLog.Add("解析SessionType时出错：" + err.Error() + "，xmlName:" + xmlName + "，data:" + data)
