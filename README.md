@@ -1,7 +1,7 @@
 <p>
-  <b>当前版本：1.03</b>
+  <b>当前版本：1.05</b>
   <br/>
-  <b>最后更新日期：2014-05-20</b>
+  <b>最后更新日期：2014-05-23</b>
 </p>
 <a href="http://www.668.cm/" target="_blank">官网</a><br/>
 <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
