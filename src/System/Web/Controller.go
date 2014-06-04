@@ -161,3 +161,8 @@ func (this *Controller) Redirect(strUrl string) {
 func (this *Controller) BindModel(model interface{}) error {
 	return this.DefaultBinder.BindModel(model)
 }
+func (this *Controller) ClearSession() {
+	for k := range this.Session {
+		delete(this.Session, k)
+	}
+}

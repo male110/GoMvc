@@ -19,7 +19,6 @@ func (this *HttpHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	defer func() {
 		//错误处理
 		if e := recover(); e != nil {
-			fmt.Println(e)
 			err := e.(error)
 			App.Log.Add("URL:" + r.URL.String() + "\t" + fmt.Sprintf("%v", err) + "\r\n" + string(debug.Stack()))
 			if App.Configs.ShowErrors {
@@ -73,10 +72,7 @@ func (this *HttpHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//获取Session
-	var sessions map[string]interface{}
-	if App.SessionProvider != nil {
-		sessions, err = App.SessionProvider.StartSession(rw, r, App.Configs.SessionLocation)
-	}
+	sessions, err := App.SessionProvider.StartSession(rw, r, App.Configs.SessionLocation)
 	if err != nil {
 		App.Log.AddError(err)
 	}
@@ -133,7 +129,7 @@ func (this *HttpHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	//调用UnLoad
 	this.CallUnLoad(ctl)
 	//调用EndSession
-	this.EndRequest(sessions, cookies, rw, r)
+	App.SessionProvider.EndSession(sessions, App.Configs.SessionLocation, r)
 }
 
 //初始化Controller
@@ -328,9 +324,7 @@ func (this *HttpHandler) EndRequest(sessions map[string]interface{}, cookies map
 			App.Log.Add("in HttpHandler EndRequest URL:" + r.URL.String() + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
 		}
 	}()
-	if App.SessionProvider != nil {
-		App.SessionProvider.EndSession(sessions, App.Configs.SessionLocation, r)
-	}
+	App.SessionProvider.EndSession(sessions, App.Configs.SessionLocation, r)
 	for k, v := range cookies {
 		v = url.QueryEscape(v)
 		cookie := &http.Cookie{

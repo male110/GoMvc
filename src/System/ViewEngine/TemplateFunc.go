@@ -9,8 +9,10 @@ import (
 	"io/ioutil"
 	"math"
 	"net/http"
+	"runtime/debug"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var TemplatFuncs FuncMap = make(FuncMap)
@@ -28,11 +30,13 @@ func init() {
 	TemplatFuncs["IsOddNumber"] = IsOddNumber
 	TemplatFuncs["Mod"] = Mod
 	TemplatFuncs["RenderView"] = RenderView
+	TemplatFuncs["FormatTime"] = FormatTime
 }
 
 //等于
 func Equal(a, b interface{}) bool {
 	result := a == b
+	//fmt.Println(a, "\t", b, "\t", result)
 	return result
 }
 
@@ -254,7 +258,10 @@ func RenderView(strViewName string, viewData map[string]interface{}) HTML {
 
 	viewEngine := NewDefualtEngine()
 	writer := new(bytes.Buffer)
-	viewEngine.RenderView(strArea, strController, strViewName, strTheme, viewData, writer)
+	err := viewEngine.RenderView(strArea, strController, strViewName, strTheme, viewData, writer)
+	if err != nil {
+		Log.AppLog.Add("RenderView出错 area:" + strArea + ",controller:" + strController + ",viewName:" + strViewName + "\r\n" + err.Error() + "\r\n" + string(debug.Stack()))
+	}
 	return HTML(writer.String())
 }
 
@@ -267,4 +274,7 @@ func Mod(x, y float64) float64 {
 func IsOddNumber(x int) bool {
 	i := Mod(float64(x), 2)
 	return i != 0
+}
+func FormatTime(t time.Time, strFormat string) string {
+	return t.Format(strFormat)
 }
