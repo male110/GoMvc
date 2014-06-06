@@ -27,7 +27,6 @@ background-color:#555555;}
 </div>
 </body>
 </html>
-{{.area}}
 <script type="text/javascript">
 /*setTimeout('window.location.href="/{{if not (Equal .Action "") }}{{.area}}{{end}}"',5000);*/
 </script>

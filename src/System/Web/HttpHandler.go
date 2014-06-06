@@ -350,7 +350,6 @@ func (this *HttpHandler) Show404(w http.ResponseWriter, strArea string) {
 		}
 	}()
 	viewData := make(map[string]interface{})
-	viewData["area"] = strArea
 	result := ViewResult{
 		ViewData:       viewData,
 		ViewEngine:     App.ViewEngine,
