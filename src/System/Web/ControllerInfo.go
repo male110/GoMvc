@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
-	"runtime/debug"
 	"strings"
 )
 
@@ -112,7 +111,7 @@ func (this *ControllersCollection) GetController(routeData map[string]interface{
 		//错误处理
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add("In ControllerInfo.GetController:\t" + err.Error() + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("In ControllerInfo.GetController:\t" + err.Error())
 		}
 	}()
 	var result reflect.Value

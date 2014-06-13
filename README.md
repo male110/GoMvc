@@ -1,7 +1,7 @@
 <p>
-  <b>当前版本：1.06</b>
+  <b>当前版本：1.07</b>
   <br/>
-  <b>最后更新日期：2014-06-04</b>
+  <b>最后更新日期：2014-06-13</b>
 </p>
 <a href="http://www.668.cm/" target="_blank">官网</a><br/>
 <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
@@ -17,7 +17,8 @@
     <a name="updatelog">更新日志</a>
   </b>
   <pre>
-    <b>2014-06-04</b>	    Controller增加ClearSession函数，RenderView增加错误日志
+    <b>2014-06-13</b>	    修改日志记录System/Log/Logger.go,AddError自动记录堆栈信息，增加AddErrMsg函数，自动记录堆栈信息，Add不记堆栈信息。
+	2014-06-04	    Controller增加ClearSession函数，RenderView增加错误日志
     2014-05-23	    修改Session相关处理部分，在配置文件中，<SessionType>0</SessionType>配成零或空，表示程序不使用Session，
 		    比如做WEBAPI时，可以配置成0，程序不使用Session可以降低资源占用，提高性能。
     2014-05-22 　　 修改Http请求处理过程，支持这样的Action

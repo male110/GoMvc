@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"path/filepath"
+	"runtime/debug"
 	"strings"
 	"sync"
 	"time"
-
-	"path/filepath"
 )
 
 type Logger struct {
@@ -140,9 +140,9 @@ func (this *Logger) Add(content string) error {
 	return err
 }
 
-/*添加一条错误信息*/
+/*添加一条错误信息,并记录堆栈信息*/
 func (this *Logger) AddError(err error) error {
-	content := time.Now().Format("2006-01-02 15:04:05") + "\t" + err.Error() + "\r\n"
+	content := time.Now().Format("2006-01-02 15:04:05") + "\t" + err.Error() + "\r\n" + string(debug.Stack())
 	this.lock.Lock()
 	defer this.lock.Unlock()
 	err1 := this.generateFileName()
@@ -151,6 +151,12 @@ func (this *Logger) AddError(err error) error {
 	}
 	err1 = this.writeFile(content)
 	return err1
+}
+
+/*增加一条日志，并记录堆栈信息*/
+func (this *Logger) AddErrMsg(content string) error {
+	content = content + "\r\n" + string(debug.Stack())
+	return this.Add(content)
 }
 
 /*设置日志的存放位置*/

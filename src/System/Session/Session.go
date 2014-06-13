@@ -94,9 +94,6 @@ func (this *SessionBase) setSessionName(sid string, w http.ResponseWriter, r *ht
 	r.AddCookie(cookie)
 }
 func NewSession(ntype int) ISession {
-	if ntype == 0 {
-		return nil
-	}
 	switch ntype {
 	case 1:
 		return NewFileSession()

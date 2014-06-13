@@ -9,7 +9,6 @@ import (
 	"io/ioutil"
 	"math"
 	"net/http"
-	"runtime/debug"
 	"strconv"
 	"strings"
 	"time"
@@ -260,7 +259,7 @@ func RenderView(strViewName string, viewData map[string]interface{}) HTML {
 	writer := new(bytes.Buffer)
 	err := viewEngine.RenderView(strArea, strController, strViewName, strTheme, viewData, writer)
 	if err != nil {
-		Log.AppLog.Add("RenderView出错 area:" + strArea + ",controller:" + strController + ",viewName:" + strViewName + "\r\n" + err.Error() + "\r\n" + string(debug.Stack()))
+		Log.AppLog.AddErrMsg("RenderView出错 area:" + strArea + ",controller:" + strController + ",viewName:" + strViewName + "\r\n" + err.Error())
 	}
 	return HTML(writer.String())
 }

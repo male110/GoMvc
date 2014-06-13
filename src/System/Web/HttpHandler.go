@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
-	"runtime/debug"
 	"strings"
 )
 
@@ -20,7 +19,7 @@ func (this *HttpHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		//错误处理
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add("URL:" + r.URL.String() + "\t" + fmt.Sprintf("%v", err) + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("URL:" + r.URL.String() + "\t" + fmt.Sprintf("%v", err))
 			if App.Configs.ShowErrors {
 				this.Show505(rw, err)
 			}
@@ -138,7 +137,7 @@ func (this *HttpHandler) initController(ictl IController, rw http.ResponseWriter
 		//错误处理
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add("in HttpHandler initController URL:" + r.URL.String() + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("in HttpHandler initController URL:" + r.URL.String() + "\t" + err.Error())
 		}
 	}()
 	ictl.SetResponse(rw)
@@ -172,7 +171,7 @@ func (this *HttpHandler) CallOnLoad(ctl reflect.Value) {
 		//错误处理
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add("in HttpHandler CallOnLoad\t" + err.Error() + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("in HttpHandler CallOnLoad\t" + err.Error())
 		}
 	}()
 	onload := ctl.MethodByName("OnLoad")
@@ -193,7 +192,7 @@ func (this *HttpHandler) CallUnLoad(ctl reflect.Value) {
 		//错误处理
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add("in HttpHandler CallUnLoad \t" + err.Error() + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("in HttpHandler CallUnLoad \t" + err.Error())
 		}
 	}()
 	unload := ctl.MethodByName("UnLoad")
@@ -214,7 +213,7 @@ func (this *HttpHandler) GetMethodParam(methodType reflect.Type, binder *Binder)
 		//错误处理
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add("in HttpHandler.GetMethodParam \t" + err.Error() + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("in HttpHandler.GetMethodParam \t" + err.Error())
 
 		}
 	}()
@@ -242,7 +241,7 @@ func (this *HttpHandler) ProcessStatic(requestPath string, w http.ResponseWriter
 		//错误处理
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add("In HttpHandler.ProcessStatic:\t" + err.Error() + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("In HttpHandler.ProcessStatic:\t" + err.Error())
 		}
 	}()
 	//转换为小写，不区分大小写的比较
@@ -276,7 +275,7 @@ func (this *HttpHandler) GetCookie(r *http.Request) map[string]string {
 		//错误处理
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add("In HttpHandler.GetCookie URL:" + r.URL.String() + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("In HttpHandler.GetCookie URL:" + r.URL.String() + "\t" + err.Error())
 		}
 	}()
 	m := make(map[string]string)
@@ -290,7 +289,7 @@ func (this *HttpHandler) GetForms(r *http.Request) map[string]string {
 		//错误处理
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add("in HttpHandler GetForms URL:" + r.URL.String() + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("in HttpHandler GetForms URL:" + r.URL.String() + "\t" + err.Error())
 		}
 	}()
 	m := make(map[string]string)
@@ -304,7 +303,7 @@ func (this *HttpHandler) GetQueryString(r *http.Request) map[string]string {
 		//错误处理
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add("in HttpHandler GetQueryString URL:" + r.URL.String() + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("in HttpHandler GetQueryString URL:" + r.URL.String() + "\t" + err.Error())
 		}
 	}()
 	m := make(map[string]string)
@@ -321,7 +320,7 @@ func (this *HttpHandler) EndRequest(sessions map[string]interface{}, cookies map
 		//错误处理
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add("in HttpHandler EndRequest URL:" + r.URL.String() + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("in HttpHandler EndRequest URL:" + r.URL.String() + "\t" + err.Error())
 		}
 	}()
 	App.SessionProvider.EndSession(sessions, App.Configs.SessionLocation, r)
@@ -346,10 +345,11 @@ func (this *HttpHandler) Show404(w http.ResponseWriter, strArea string) {
 		//错误处理
 		if e := recover(); e != nil {
 			err := e.(error)
-			App.Log.Add("in HttpHandler Show404\t" + err.Error() + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("in HttpHandler Show404\t" + err.Error())
 		}
 	}()
 	viewData := make(map[string]interface{})
+	viewData["area"] = strArea
 	result := ViewResult{
 		ViewData:       viewData,
 		ViewEngine:     App.ViewEngine,

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"reflect"
-	"runtime/debug"
 	"strconv"
 	"strings"
 )
@@ -54,7 +53,7 @@ func (this *Binder) BindModel(data interface{}) error {
 
 			err := e.(error)
 
-			App.Log.Add("in Binder.BindModel:" + "\t" + err.Error() + "\r\n" + string(debug.Stack()))
+			App.Log.AddErrMsg("in Binder.BindModel:" + "\t" + err.Error())
 		}
 	}()
 	var rv reflect.Value
