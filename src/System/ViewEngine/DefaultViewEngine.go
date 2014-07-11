@@ -119,7 +119,7 @@ func (this *DefaultViewEngine) getGlobalTemplate(area, theme string) (string, er
 			return "", err
 		}
 		if isChange {
-			tplContent, err := this.ReadFiles(files...)
+			tplContent, err := this.ReadFiles(true, files...)
 			if err != nil {
 				return "", err
 			}
@@ -187,7 +187,7 @@ func (this *DefaultViewEngine) isGlobalChanged(area, theme string) (bool, []stri
 	return isChange, files, nil
 }
 
-func (this *DefaultViewEngine) ReadFiles(strFileName ...string) (string, error) {
+func (this *DefaultViewEngine) ReadFiles(isGlobale bool, strFileName ...string) (string, error) {
 	strContent := ""
 	if len(strFileName) == 0 {
 		return strContent, nil
@@ -197,7 +197,10 @@ func (this *DefaultViewEngine) ReadFiles(strFileName ...string) (string, error) 
 		if err != nil {
 			return strContent, err
 		}
-		strContent += string(buf)
+		strTemp := string(buf)
+		if isGlobale == true && strings.Index(strTemp, "{{define ") != -1 || isGlobale == false {
+			strContent += strTemp
+		}
 
 	}
 	return strContent, nil
