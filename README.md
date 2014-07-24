@@ -168,7 +168,7 @@
   GOMvc追求简单，实用，尽可能减少对其它包的依赖。在GoMvc中有两个地方用到了第三方包：
 </p>
 <p>
-  1，System/Session/MysqlSession.go 该文件实现了以mysql的方式来存储Session的功能，需要mysql的戏动。可以此下载<a
+  1，System/Session/MysqlSession.go 该文件实现了以mysql的方式来存储Session的功能，需要mysql的驱动。可以此下载<a
         href="https://github.com/go-sql-driver/mysql" target="_blank">https://github.com/go-sql-driver/mysql</a>
 </p>
 <p>
