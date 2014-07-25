@@ -1,8 +1,9 @@
-当前版本：1.07
-最后更新日期：2014-06-13
+当前版本：1.08
+最后更新日期：2014-07-25
 
 
 更新日志
+2014-07-25	修复RenderAction模板函数Cookies传递的BUG
 2014-06-13	修改日志记录System/Log/Logger.go,AddError自动记录堆栈信息，增加AddErrMsg函数，自动记录堆栈信息，Add不记堆栈信息。
 2014-06-04      Controller增加ClearSession函数，RenderView增加错误日志
 2014-05-23	修改Session相关处理部分，在配置文件中，<SessionType>0</SessionType>配成零或空，表示程序不使用Session，

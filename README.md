@@ -1,7 +1,7 @@
 <p>
-  <b>当前版本：1.07</b>
+  <b>当前版本：1.08</b>
   <br/>
-  <b>最后更新日期：2014-06-13</b>
+  <b>最后更新日期：2014-07-25</b>
 </p>
 <a href="http://www.668.cm/" target="_blank">官网</a><br/>
 <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
@@ -17,6 +17,7 @@
     <a name="updatelog">更新日志</a>
   </b>
   <pre>
+    <b>2014-07-25</b>	    修复RenderAction模板函数Cookies传递的BUG
     <b>2014-06-13</b>	    修改日志记录System/Log/Logger.go,AddError自动记录堆栈信息，增加AddErrMsg函数，自动记录堆栈信息，Add不记堆栈信息。
 	2014-06-04	    Controller增加ClearSession函数，RenderView增加错误日志
     2014-05-23	    修改Session相关处理部分，在配置文件中，<SessionType>0</SessionType>配成零或空，表示程序不使用Session，

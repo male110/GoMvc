@@ -8,6 +8,7 @@ import (
 	. "html/template"
 	"io/ioutil"
 	"math"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"strings"
@@ -30,6 +31,8 @@ func init() {
 	TemplatFuncs["Mod"] = Mod
 	TemplatFuncs["RenderView"] = RenderView
 	TemplatFuncs["FormatTime"] = FormatTime
+	TemplatFuncs["AddValue"] = AddValue
+	TemplatFuncs["RandomMetroCSS"] = RandomMetroCSS
 }
 
 //等于
@@ -180,7 +183,6 @@ func Get(url, host, cookies string, r *http.Request) HTML {
 	req.Header.Add("Connection", "keep-alive")
 	req.Header.Add("User-Agent", "	Mozilla/5.0 (Windows NT 5.1; rv:28.0) Gecko/20100101 Firefox/28.0")
 	req.Header.Add("Host", host)
-
 	response, err := client.Do(req)
 	if err != nil {
 		return HTML(err.Error())
@@ -204,9 +206,8 @@ func Get(url, host, cookies string, r *http.Request) HTML {
 func GetCookies(r *http.Request) string {
 	strCookie := ""
 	arrCookies := r.Cookies()
-	for i, j := 0, len(arrCookies); i < j; i++ {
-		c := arrCookies[i]
-		strCookie = c.Name + "=" + c.Value + ";"
+	for _, c := range arrCookies {
+		strCookie += c.Name + "=" + c.Value + ";"
 	}
 	strCookie = strings.Trim(strCookie, ";")
 	return strCookie
@@ -276,4 +277,19 @@ func IsOddNumber(x int) bool {
 }
 func FormatTime(t time.Time, strFormat string) string {
 	return t.Format(strFormat)
+}
+
+//函数必须有一个返回值
+func AddValue(m map[string]interface{}, key string, value interface{}) string {
+	m[key] = value
+	return ""
+}
+
+//随机返回一个Css样式
+func RandomMetroCSS() string {
+	arrCss := []string{"amber", "blue", "brown", "cobalt", "crimson", "cyan", "magenta", "lime", "indigo", "green", "emerald", "mango", "mauve", "olive", "orange", "pink", "red", "sienna", "steel", "teal", "violet", "yellow"}
+	r := rand.New(rand.NewSource(time.Now().Unix()))
+	l := len(arrCss)
+	index := r.Int31n(int32(l))
+	return arrCss[index]
 }
