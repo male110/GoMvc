@@ -3,10 +3,11 @@
   <br/>
   <b>最后更新日期：2014-07-25</b>
 </p>
-<a href="http://www.668.cm/" target="_blank">官网</a><br/>
+<a href="http://www.66a.cm/" target="_blank">官网</a><br/>
 <a href="https://github.com/male110/GoMvc/archive/master.zip">下载GoMvc</a><br/>
 
 <p>有任何问题，可加QQ群：184572648，我基本上每天都在线的</p>
+<p>原域名因忘记续费被别人抢注了，新域名为66a.cm</p>
 <a href="#updatelog">更新日志</a><br/>
 <a href="#build"> 编译</a><br />
 <a href="#config">  配置文件</a><br />
