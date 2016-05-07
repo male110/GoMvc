@@ -42,10 +42,8 @@ func (this *FileSession) readSessionFromFile(sid string, location string, w http
 			AppLog.Add("in FileSession.readSession，读文件时出错：" + err.Error())
 			return m, err
 		}
-		m, err = GobSerialize.Decode(buf)
-		if err != nil {
-			AppLog.Add("in FileSession.readSession，gob.Decode时出错：" + err.Error())
-		}
+		m, _ = GobSerialize.Decode(buf)
+		
 		return m, nil
 	} else {
 		if !os.IsNotExist(err) {
@@ -90,6 +88,12 @@ func (this *FileSession) EndSession(data map[string]interface{}, location string
 	}
 	return nil
 }
+//删除Session
+func (this *FileSession)deleteBySid(sid string,location string) error{
+	strFileName:=this.getSessionFileName(sid,this.location)
+	return os.Remove(strFileName)
+}
+
 func (this *FileSession) GC(timeOut int, location string) {
 	this.timeOut = timeOut
 	/*如果正在GC中，直接返回，因为遍历可能比较费时*/
@@ -122,5 +126,6 @@ func NewFileSession() *FileSession {
 	fs := &FileSession{gcing: false}
 	fs.readSession = fs.readSessionFromFile
 	fs.newSession = fs.CreateNewSession
+	fs.deleteSession=fs.deleteBySid
 	return fs
 }

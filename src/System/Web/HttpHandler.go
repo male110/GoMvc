@@ -28,10 +28,15 @@ func (this *HttpHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	//解析请求
 	contentType := r.Header.Get("Content-Type")
 	enctype, _, _ := mime.ParseMediaType(contentType)
+	r.ParseForm()
 	if enctype == "multipart/form-data" {
-		r.ParseMultipartForm(10 * 1024 * 1024) //默认10M
-	} else {
-		r.ParseForm()
+		var size int64
+		size = 30 * 1024 * 1024
+		if (AppConfig.UploadSize + 3*1024*1024) > size {
+			//如果上传文件大小限制超过30M，则在AppConfig.UploadSize上+3M做为ParseMultipartForm的大小
+			size = AppConfig.UploadSize + 3*1024*1024
+		}
+		r.ParseMultipartForm(size) //配置文件默认30M
 	}
 	//获取请求路径
 	requestPath := strings.Trim(r.URL.Path, "/")
@@ -156,13 +161,22 @@ func (this *HttpHandler) initController(ictl IController, rw http.ResponseWriter
 	ictl.SetViewEngin(App.ViewEngine)
 	ictl.SetCookies(cookies)
 	ictl.SetBinder(binder)
-	ictl.SetQueryString(this.GetQueryString(r))
+	ictl.SetQueryString(this.GetQueryString(r, routData))
 	ictl.SetForm(this.GetForms(r))
 	if r.Method == "POST" {
 		ictl.SetIsPost(true)
 	} else {
 		ictl.SetIsPost(false)
 	}
+	//获取来源地址
+	ictl.SetReferer(r.Header.Get("Referer"))
+	//是否ajax请求，是返回true,否返回false
+	if r.Header.Get("X-Requested-With") != "" {
+		ictl.SetIsAjax(true)
+	} else {
+		ictl.SetIsAjax(false)
+	}
+
 }
 
 /*调用OnLoad函数,如果存在*/
@@ -298,7 +312,7 @@ func (this *HttpHandler) GetForms(r *http.Request) map[string]string {
 	}
 	return m
 }
-func (this *HttpHandler) GetQueryString(r *http.Request) map[string]string {
+func (this *HttpHandler) GetQueryString(r *http.Request, routData map[string]interface{}) map[string]string {
 	defer func() {
 		//错误处理
 		if e := recover(); e != nil {
@@ -307,10 +321,25 @@ func (this *HttpHandler) GetQueryString(r *http.Request) map[string]string {
 		}
 	}()
 	m := make(map[string]string)
+	//将路由参数存到QueryString里，方便程序统一处理
+	for k, v := range routData {
+		strKey := strings.TrimSpace(strings.ToLower(k))
+		switch strKey {
+		case "area":
+			continue
+		case "action":
+			continue
+		case "controller":
+			continue
+		}
+		m[k] = fmt.Sprintf("%v", v)
+	}
+	//地址栏中的参数将覆盖同名的routeDate值
 	querys := r.URL.Query()
 	for k, v := range querys {
 		m[k] = v[len(v)-1]
 	}
+
 	return m
 }
 

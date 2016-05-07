@@ -17,6 +17,8 @@ type ISession interface {
 	StartSession(w http.ResponseWriter, r *http.Request, location string) (map[string]interface{}, error)
 	/*在请求处理结束时调用，与StartSession相对应,用来把Session数据存回存储介质中*/
 	EndSession(data map[string]interface{}, location string, r *http.Request) error
+	/*释放Session*/
+	Distroy(w http.ResponseWriter,r *http.Request,location string) error
 	/*定时对Session进行清理，timeOut是Session超期时间，单位分钟*/
 	GC(timeOut int, location string)
 }
@@ -26,6 +28,8 @@ type SessionBase struct {
 	readSession func(sid string, location string, w http.ResponseWriter, r *http.Request) (map[string]interface{}, error)
 	/*产生一个新的Session*/
 	newSession func(location string, w http.ResponseWriter, r *http.Request) (map[string]interface{}, error)
+	/*删除一个session*/
+	deleteSession func(sid string,location string) error
 }
 
 func (this *SessionBase) StartSession(w http.ResponseWriter, r *http.Request, location string) (map[string]interface{}, error) {
@@ -86,12 +90,17 @@ func (this *SessionBase) setSessionName(sid string, w http.ResponseWriter, r *ht
 		Path:     "/",
 		HttpOnly: true,
 	}
+	
 	if Config.AppConfig.CookieDomain != "" {
 		cookie.Domain = Config.AppConfig.CookieDomain
 	}
 	http.SetCookie(w, cookie)
 	/*产生新的cookie后同时更新Request中的Session值，要么会出问题*/
 	r.AddCookie(cookie)
+}
+func (this *SessionBase) Distroy( w http.ResponseWriter, r *http.Request,location string) error{
+	sid:=this.getSessionId(r)
+	return this.deleteSession(sid,location)
 }
 func NewSession(ntype int) ISession {
 	switch ntype {

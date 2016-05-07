@@ -70,9 +70,15 @@ func (this *MemSession) GC(timeOut int, location string) {
 		}
 	}
 }
+//删除session
+func (this *MemSession)deleteBySid(sid string,location string) error{
+	delete(this.sessions,sid)
+	return nil
+}
 func NewMemSession() *MemSession {
 	ms := &MemSession{sessions: make(map[string]MemSessionItem), gcing: false}
 	ms.readSession = ms.GetSession
 	ms.newSession = ms.CreateNewSession
+	ms.deleteSession=ms.deleteBySid
 	return ms
 }

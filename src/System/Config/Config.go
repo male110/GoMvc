@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"regexp"
 )
 
 type StaticFile struct {
@@ -32,6 +33,8 @@ type Config struct {
 	ListenPort       int    //Http监听的端口号，该配置改后必须重启程序才能生效
 	lastModifyTime   time.Time
 	loadTime         time.Time //xml加载时间
+	UploadSizeText string //上传文件大小限制的文本3M,3K
+	UploadSize int64 //文件大小的字节
 }
 
 func NewConfig() *Config {
@@ -193,6 +196,12 @@ func processXmlTocken(c *Config, xmlName, data string) {
 		} else {
 			c.ListenPort = port
 		}
+	case "MaxUpload":
+		size:=parseUploadSize(data)
+		if size>0{
+			c.UploadSizeText=data
+			c.UploadSize=size
+		}
 	}
 }
 
@@ -208,7 +217,40 @@ func isExist(path string) bool {
 }
 func NewDefault() *Config {
 	c := &Config{IsDebug: true, Theme: "default", LogPath: "Log", LogFileMaxSize: 5, DriverName: "mysql", SessionType: 1, SessionLocation: "sessions", SessionTimeOut: 30, MemFreeInterval: 60}
+	c.UploadSizeText="3M"
+	c.UploadSize=3145728
 	return c
 }
-
+//解析上传文件大小的字符串
+func parseUploadSize(strSize string) int64 {
+	if strSize==""{
+		return 0
+	}
+	strSize=strings.ToUpper(strSize)
+	strSize=strings.Replace(strSize,"MB","M",-1)
+	strSize=strings.Replace(strSize,"KB","K",-1)
+	strSize=strings.TrimSpace(strSize)
+	reg,_:=regexp.Compile("^([0-9]+)\\s*([A-Z]+)$")
+	if reg.MatchString(strSize){
+		reg,_=regexp.Compile("^[0-9]+")
+		strNum:=reg.FindString(strSize)
+		reg,_=regexp.Compile("[A-Z]+$")
+		strUnit:=reg.FindString(strSize)
+		if strNum==""||strUnit==""{
+			return 0
+		}
+		size,err:=strconv.ParseInt(strNum,10,32)
+		if err!=nil{
+			return 0
+		}
+		switch strUnit{
+			case "M":
+			size=size*1024*1024
+			case "K":
+			size=size*1024
+		}
+		return size
+	}
+	return 0
+}
 var AppConfig *Config = NewConfig()

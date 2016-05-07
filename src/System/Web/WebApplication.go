@@ -42,7 +42,7 @@ func (this *WebApplication) initWatcher() {
 		this.Log.AddError(err)
 		return
 	}
-	err = this.watcher.Watch("web.config")
+	err = this.watcher.Watch("./web.config")
 	if err != nil {
 		this.Log.AddError(err)
 		return

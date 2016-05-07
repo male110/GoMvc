@@ -42,10 +42,8 @@ func (this *MysqlSession) readSessionFromDB(sid string, location string, w http.
 			return m, err
 		}
 		if buf != nil && len(buf) > 0 {
-			m, err = GobSerialize.Decode(buf)
-			if err != nil {
-				AppLog.Add("MysqlSession.readSession,gob.Decode时出错：" + err.Error())
-			}
+			m, _ = GobSerialize.Decode(buf)
+			
 		}
 		return m, err
 	} else {
@@ -93,6 +91,21 @@ func (this *MysqlSession) EndSession(data map[string]interface{}, location strin
 	}
 	return err
 }
+//删除一个session
+func(this *MysqlSession) deleteBySid(sid,location string) error{
+	db, err := sql.Open("mysql", location)
+	if err != nil {
+		AppLog.Add("MysqlSession.newSession,打开数据连接时出错：" + err.Error() + ",连接字符串为：" + location)
+		return err
+	}
+	defer db.Close()
+	_, err = db.Exec("delete from `session` where session_id=?",sid)
+	if err != nil {
+		AppLog.Add("MysqlSession.newSession,插入数据时出错：" + err.Error())
+	}
+	return err
+}
+
 func (this *MysqlSession) GC(timeOut int, location string) {
 
 	if this.gcing {
@@ -115,5 +128,6 @@ func NewMysqlSession() *MysqlSession {
 	s := &MysqlSession{gcing: false}
 	s.readSession = s.readSessionFromDB
 	s.newSession = s.CreateNewSession
+	s.deleteSession=s.deleteBySid
 	return s
 }

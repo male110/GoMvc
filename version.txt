@@ -3,6 +3,23 @@
 
 
 更新日志
+2016-05-07 
+1，对原来的this.QueryString，this.Form获取表单参数的方做了一些改进
+this.QueryString.Int("id"),this.this.QueryString.String("UserName")来获取数据，省去了类型转换，使代码更简练。
+
+2，增加了一些属性，和函数。
+this.IsAjax 判断当前请求是否Ajax
+this.IsPost 当前请求类型是否Post
+this.IsInWeiXin() 是否在微信浏览器下
+this.IsCrawler() 当前请求是否来自搜索引擎的抓取
+
+3，RouteTable.AddRote(&RouteItem{
+		Name:        "article_details",
+		Url:         "details/{id}",
+		Defaults:    map[string]interface{}{"controller": "home", "action": "Details", "id": 0},
+		Constraints: map[string]string{"id": `^(\d+)$`}})
+原来对id参数的获取是通过this.RouteData["id"]获取，现在可以直接通过this.QueryString.Int("id")来获取
+
 2014-07-25	修复RenderAction模板函数Cookies传递的BUG
 2014-06-13	修改日志记录System/Log/Logger.go,AddError自动记录堆栈信息，增加AddErrMsg函数，自动记录堆栈信息，Add不记堆栈信息。
 2014-06-04      Controller增加ClearSession函数，RenderView增加错误日志

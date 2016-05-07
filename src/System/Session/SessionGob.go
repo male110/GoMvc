@@ -48,6 +48,7 @@ func (this *SessionGob) Encode(m map[string]interface{}) ([]byte, error) {
 	for _, v := range m {
 		this.registerItem(v)
 	}
+	
 	var buf bytes.Buffer
 	enc := gob.NewEncoder(&buf)
 	err := enc.Encode(m)
@@ -62,10 +63,7 @@ func (this *SessionGob) Decode(data []byte) (map[string]interface{}, error) {
 	dec := gob.NewDecoder(buf)
 	out := make(map[string]interface{})
 	err := dec.Decode(&out)
-	if err != nil {
-		AppLog.Add("in SessionGob.Decode()，" + err.Error())
-		return nil, err
-	}
+	
 	return out, err
 }
 
