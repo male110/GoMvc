@@ -19,27 +19,26 @@
 	<b> <a name="updatelog"></a>更新日志 </b> 
 </p>
 <p>
-	<b>2016-05-07</b>
-</p>
-<p>
-	&nbsp;1，对原来的this.QueryString，this.Form获取表单参数的方做了一些改进<br />
-this.QueryString.Int("id"),this.this.QueryString.String("UserName")来获取数据，省去了类型转换，使代码更简练。<br />
-<br />
-2，增加了一些属性，和函数。<br />
-this.IsAjax 判断当前请求是否Ajax<br />
-this.IsPost 当前请求类型是否Post<br />
-this.IsInWeiXin() 是否在微信浏览器下<br />
-this.IsCrawler() 当前请求是否来自搜索引擎的抓取<br />
-<br />
-3，RouteTable.AddRote(&amp;RouteItem{<br />
-Name: &nbsp; &nbsp; &nbsp; &nbsp;"article_details",<br />
-Url: &nbsp; &nbsp; &nbsp; &nbsp; "details/{id}",<br />
-Defaults: &nbsp; &nbsp;map[string]interface{}{"controller": "home", "action": "Details", "id": 0},<br />
-Constraints: map[string]string{"id": `^(\d+)$`}})<br />
+<pre>   
+   <b>2016-05-07</b>
+1，对原来的this.QueryString，this.Form获取表单参数的方做了一些改进
+this.QueryString.Int("id"),this.this.QueryString.String("UserName")来获取数据，省去了类型转换，使代码更简练。
+
+2，增加了一些属性，和函数。
+this.IsAjax 判断当前请求是否Ajax
+this.IsPost 当前请求类型是否Post
+this.IsInWeiXin() 是否在微信浏览器下
+this.IsCrawler() 当前请求是否来自搜索引擎的抓取
+
+3，RouteTable.AddRote(&RouteItem{
+		Name:        "article_details",
+		Url:         "details/{id}",
+		Defaults:    map[string]interface{}{"controller": "home", "action": "Details", "id": 0},
+		Constraints: map[string]string{"id": `^(\d+)$`}})
 原来对id参数的获取是通过this.RouteData["id"]获取，现在可以直接通过this.QueryString.Int("id")来获取
-</p>
-<pre>    <b>2014-07-25</b> 修复RenderAction模板函数Cookies传递的BUG <b>2014-06-13</b> 修改日志记录System/Log/Logger.go,AddError自动记录堆栈信息，增加AddErrMsg函数，自动记录堆栈信息，Add不记堆栈信息。
-	2014-06-04	    Controller增加ClearSession函数，RenderView增加错误日志
+
+    2014-07-25 修复RenderAction模板函数Cookies传递的BUG <b>2014-06-13</b> 修改日志记录System/Log/Logger.go,AddError自动记录堆栈信息，增加AddErrMsg函数，自动记录堆栈信息，Add不记堆栈信息。
+    2014-06-04	    Controller增加ClearSession函数，RenderView增加错误日志
     2014-05-23	    修改Session相关处理部分，在配置文件中，0配成零或空，表示程序不使用Session，
 		    比如做WEBAPI时，可以配置成0，程序不使用Session可以降低资源占用，提高性能。
     2014-05-22 　　 修改Http请求处理过程，支持这样的Action
